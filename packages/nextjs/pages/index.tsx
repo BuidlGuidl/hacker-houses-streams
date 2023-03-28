@@ -2,48 +2,19 @@ import { useState } from "react";
 import Head from "next/head";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
-import { useAccount, useContractReads } from "wagmi";
+import { useAccount } from "wagmi";
 import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-
-const builderAddresses = ["0x8393A66F048F181FFD8044Ad7E260222848Dff8f", "0x56041eA5Edf5BFB18f515DB4FE61842Ab1ddC578"];
-
-interface StreamInfo {
-  cap: ethers.BigNumber;
-  last: ethers.BigNumber;
-}
+import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address } = useAccount();
   const [reason, setReason] = useState("");
   const [amount, setAmount] = useState("");
-  const { data: contractData } = useDeployedContractInfo("YourContract");
+  const { data: streamContract } = useDeployedContractInfo("YourContract");
 
-  const streamContract = {
-    address: contractData?.address,
-    abi: contractData?.abi,
-  };
-
-  const streamInfoReads = builderAddresses.map(builderAddress => ({
-    ...streamContract,
-    functionName: "streamedBuilders",
-    args: [builderAddress],
-  }));
-
-  const streamUnlockedReads = builderAddresses.map(builderAddress => ({
-    ...streamContract,
-    functionName: "unlockedBuilderAmount",
-    args: [builderAddress],
-  }));
-
-  const { data: streamInfoData }: { data: StreamInfo[] | undefined } = useContractReads({
-    contracts: streamInfoReads,
-    watch: true,
-  });
-
-  const { data: streamUnlockedData }: { data: ethers.BigNumber[] | undefined } = useContractReads({
-    contracts: streamUnlockedReads,
-    watch: true,
+  const { data: allBuildersData } = useScaffoldContractRead({
+    contractName: "YourContract",
+    functionName: "allBuildersData",
   });
 
   const { writeAsync: doWithdraw } = useScaffoldContractWrite({
@@ -52,6 +23,7 @@ const Home: NextPage = () => {
     args: [ethers.utils.parseEther(amount || "0"), reason],
   });
 
+  const amIAStreamedBuilder = allBuildersData?.some(builderData => builderData.builderAddress === address);
   return (
     <>
       <Head>
@@ -63,10 +35,10 @@ const Home: NextPage = () => {
         Welcome <Address address={address} />
         <div className="pt-6">
           <span className="font-bold">Stream contract Balance</span>{" "}
-          <Balance address={streamContract.address} className="text-3xl" />
+          <Balance address={streamContract?.address} className="text-3xl" />
         </div>
         <div className="mt-6">
-          {address && builderAddresses.includes(address) && (
+          {address && amIAStreamedBuilder && (
             <div className="flex flex-col gap-3 items-center">
               <input
                 type="text"
@@ -83,14 +55,13 @@ const Home: NextPage = () => {
           )}
         </div>
         <h1 className="mt-5 mb-3 font-bold text-3xl">List of Hackers</h1>
-        {builderAddresses.map((builderAddress, index) => {
-          const cap = ethers.utils.formatEther(streamInfoData?.[index].cap.toString() || 0);
-          const unlocked = ethers.utils.formatEther(streamUnlockedData?.[index].toString() || 0);
+        {allBuildersData?.map(builderData => {
+          const cap = ethers.utils.formatEther(builderData.cap || 0);
+          const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
           const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
-
           return (
-            <div className="pb-4 flex gap-4" key={builderAddress}>
-              <Address address={builderAddress} />
+            <div className="pb-4 flex gap-4" key={builderData.builderAddress}>
+              <Address address={builderData.builderAddress} />
               <div>
                 {unlocked} / {cap}
               </div>
