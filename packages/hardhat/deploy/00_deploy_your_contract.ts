@@ -38,6 +38,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const streamTestData = [
     [FRONTEND_ADDRESS, ethers.utils.parseEther("1")],
     ["0x34aA3F359A9D614239015126635CE7732c18fDF3", ethers.utils.parseEther("1")],
+    ["0xc1470707Ed388697A15B9B9f1f5f4cC882E28a45", ethers.utils.parseEther("1")],
     ["0x61B647D3b5a04Eec7E78B1d9CFbF9deA593c7865", ethers.utils.parseEther("0.5")],
   ];
   // Get the deployed contract

@@ -9,6 +9,7 @@ import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWr
 const streamedBuilders = [
   "0x8393A66F048F181FFD8044Ad7E260222848Dff8f",
   "0x34aA3F359A9D614239015126635CE7732c18fDF3",
+  "0xc1470707Ed388697A15B9B9f1f5f4cC882E28a45",
   "0x61B647D3b5a04Eec7E78B1d9CFbF9deA593c7865",
 ];
 
@@ -39,11 +40,11 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10">
-        Welcome <Address address={address} />
-        <div className="pt-6">
-          <span className="font-bold">Stream contract Balance</span>{" "}
-          <Balance address={streamContract?.address} className="text-3xl" />
-        </div>
+        <h1 className="font-bold text-center text-3xl">
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
+          Jessy's Hacker House <br />
+          BG grants
+        </h1>
         <div className="mt-6">
           {address && amIAStreamedBuilder && (
             <div className="flex flex-col gap-3 items-center">
@@ -61,21 +62,31 @@ const Home: NextPage = () => {
             </div>
           )}
         </div>
-        <h1 className="mt-5 mb-3 font-bold text-3xl">List of Hackers</h1>
-        {allBuildersData?.map(builderData => {
-          const cap = ethers.utils.formatEther(builderData.cap || 0);
-          const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
-          const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
-          return (
-            <div className="pb-4 flex gap-4" key={builderData.builderAddress}>
-              <Address address={builderData.builderAddress} />
-              <div>
-                {unlocked} / {cap}
+        <div className="my-6 flex flex-col">
+          <span className="font-bold">Stream contract Balance</span>{" "}
+          <Balance address={streamContract?.address} className="text-3xl" />
+        </div>
+        <h1 className="mt-5 mb-3 font-bold text-xl">List of Hackers</h1>
+        <div>
+          {allBuildersData?.map(builderData => {
+            const cap = ethers.utils.formatEther(builderData.cap || 0);
+            const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
+            const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
+            return (
+              <div className="pb-8 flex gap-4" key={builderData.builderAddress}>
+                <div className="w-1/2 flex">
+                  <Address address={builderData.builderAddress} />
+                </div>
+                <div className="flex flex-col items-center">
+                  <div>
+                    Ξ {unlocked} / {cap}
+                  </div>
+                  <progress className="progress w-56" value={percentage} max="100"></progress>
+                </div>
               </div>
-              <progress className="progress w-56" value={percentage} max="100"></progress>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </>
   );
