@@ -34,8 +34,9 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   // ToDo. Remove on production.
   console.log("Deploying stream test data...");
+  const FRONTEND_ADDRESS = "0x8393A66F048F181FFD8044Ad7E260222848Dff8f";
   const streamTestData = [
-    ["0x8393A66F048F181FFD8044Ad7E260222848Dff8f", ethers.utils.parseEther("1")],
+    [FRONTEND_ADDRESS, ethers.utils.parseEther("1")],
     ["0xA0394E297BF31018466E2787aD951167aD4106d7", ethers.utils.parseEther("1")],
     ["0x53077dA6111B0115F2fA6C367938550A27897101", ethers.utils.parseEther("0.5")],
   ];
@@ -45,6 +46,9 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   for (const [address, amount] of streamTestData) {
     await yourContract.addBuilderStream(address, amount);
   }
+
+  console.log("Transferring ownership to the frontend address:", FRONTEND_ADDRESS);
+  await yourContract.transferOwnership(FRONTEND_ADDRESS);
 };
 
 export default deployYourContract;

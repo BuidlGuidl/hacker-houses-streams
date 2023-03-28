@@ -54,6 +54,25 @@ contract YourContract is Ownable {
         builders.push(_builder);
     }
 
+    function deleteBuilderStream(address payable _builder) public onlyOwner {
+        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
+        require(builderStream.cap > 0, "No active stream for builder");
+        delete streamedBuilders[_builder];
+        for (uint256 i = 0; i < builders.length; i++) {
+            if (builders[i] == _builder) {
+                builders[i] = builders[builders.length - 1];
+                builders.pop();
+                break;
+            }
+        }
+    }
+
+    function updateBuilderStreamCap(address payable _builder, uint256 _cap) public onlyOwner {
+        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
+        require(builderStream.cap > 0, "No active stream for builder");
+        streamedBuilders[_builder].cap = _cap;
+    }
+
     function streamWithdraw(uint256 _amount, string memory _reason) public {
         require(address(this).balance >= _amount, "Not enough funds in the contract");
         BuilderStreamInfo storage builderStream = streamedBuilders[msg.sender];
