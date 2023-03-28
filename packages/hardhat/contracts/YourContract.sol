@@ -12,13 +12,30 @@ contract YourContract is Ownable {
         uint256 last;
     }
     mapping(address => BuilderStreamInfo) public streamedBuilders;
-
+    // ToDo. Change to 30 days
     uint256 public frequency = 300 seconds; //2592000; // 30 days
+    address[] public builders;
 
     event Withdraw(address indexed to, uint256 amount, string reason);
 
     constructor(address startingOwner) {
       _transferOwnership(startingOwner);
+    }
+
+    struct BuilderData {
+        address builderAddress;
+        uint256 cap;
+        uint256 unlockedAmount;
+    }
+
+    function allBuildersData() public view returns (BuilderData[] memory) {
+        BuilderData[] memory result = new BuilderData[](builders.length);
+        for (uint256 i = 0; i < builders.length; i++) {
+            address builderAddress = builders[i];
+            BuilderStreamInfo storage builderStream = streamedBuilders[builderAddress];
+            result[i] = BuilderData(builderAddress, builderStream.cap, unlockedBuilderAmount(builderAddress));
+        }
+        return result;
     }
 
     function unlockedBuilderAmount(address _builder) public view returns (uint256) {
@@ -34,7 +51,7 @@ contract YourContract is Ownable {
 
     function addBuilderStream(address payable _builder, uint256 _cap) public onlyOwner {
         streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - frequency);
-        // probably need an event here 
+        builders.push(_builder);
     }
 
     function streamWithdraw(uint256 _amount, string memory _reason) public {

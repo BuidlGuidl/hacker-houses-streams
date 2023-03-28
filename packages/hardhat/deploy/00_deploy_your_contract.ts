@@ -1,5 +1,6 @@
-import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { ethers } from "ethers";
 import { DeployFunction } from "hardhat-deploy/types";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -24,15 +25,26 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   await deploy("YourContract", {
     from: deployer,
     // Contract constructor arguments
-    args: ["0x12b313eA9c17c1EDCd5c7303CA6BE1A58Bb47278"],
+    args: [deployer],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
+  // ToDo. Remove on production.
+  console.log("Deploying stream test data...");
+  const streamTestData = [
+    ["0x8393A66F048F181FFD8044Ad7E260222848Dff8f", ethers.utils.parseEther("1")],
+    ["0xA0394E297BF31018466E2787aD951167aD4106d7", ethers.utils.parseEther("1")],
+    ["0x53077dA6111B0115F2fA6C367938550A27897101", ethers.utils.parseEther("0.5")],
+  ];
   // Get the deployed contract
-  // const yourContract = await hre.ethers.getContract("YourContract", deployer);
+  const yourContract = await hre.ethers.getContract("YourContract", deployer);
+
+  for (const [address, amount] of streamTestData) {
+    await yourContract.addBuilderStream(address, amount);
+  }
 };
 
 export default deployYourContract;
