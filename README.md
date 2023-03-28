@@ -1,4 +1,4 @@
-# Scaffold-Eth 2
+# Hacker Houses Streams
 
 ⚠️ This project is currently under active development. Things might break. Feel free to check the open issues & create new ones.
 
@@ -20,7 +20,6 @@ It's a new version of scaffold-eth with its core functionality. Built using Next
   * [Disabling commit checks](#Disabling-commit-checks)
   * [Deploying to Vercel without any checks](#Deploying-to-Vercel-without-any-checks)
   * [Disabling Github Workflow](#Disabling-Github-Workflow)
-- [Contributing to Scaffold-Eth 2](#Contributing-to-Scaffold-Eth-2)
 
 ## Requirements
 
@@ -36,8 +35,8 @@ To get started with Scaffold-Eth 2, follow the steps below:
 1. Clone this repo & install dependencies
 
 ```
-git clone https://github.com/scaffold-eth/se-2.git
-cd se-2
+git clone https://github.com/buidlguidl/hacker-houses-streams.git
+cd hacker-houses-streams
 yarn install
 ```
 
@@ -146,10 +145,3 @@ yarn vercel:yolo
 We have github workflow setup checkout `.github/workflows/lint.yaml` which runs types and lint error checks every time code is __pushed__ to `main` branch or __pull request__ is made to `main` branch
 
 To disable it, **delete `.github` directory**
-
-## Contributing to Scaffold-Eth 2
-
-We welcome contributions to Scaffold-Eth 2!
-
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/se-2/blob/master/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-Eth 2.
-
