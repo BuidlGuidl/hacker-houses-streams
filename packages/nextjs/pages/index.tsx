@@ -6,6 +6,12 @@ import { useAccount } from "wagmi";
 import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
+const streamedBuilders = [
+  "0x8393A66F048F181FFD8044Ad7E260222848Dff8f",
+  "0x34aA3F359A9D614239015126635CE7732c18fDF3",
+  "0x61B647D3b5a04Eec7E78B1d9CFbF9deA593c7865",
+];
+
 const Home: NextPage = () => {
   const { address } = useAccount();
   const [reason, setReason] = useState("");
@@ -15,6 +21,7 @@ const Home: NextPage = () => {
   const { data: allBuildersData } = useScaffoldContractRead({
     contractName: "YourContract",
     functionName: "allBuildersData",
+    args: [streamedBuilders],
   });
 
   const { writeAsync: doWithdraw } = useScaffoldContractWrite({

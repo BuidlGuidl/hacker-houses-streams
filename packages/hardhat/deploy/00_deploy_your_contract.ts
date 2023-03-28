@@ -37,14 +37,16 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const FRONTEND_ADDRESS = "0x8393A66F048F181FFD8044Ad7E260222848Dff8f";
   const streamTestData = [
     [FRONTEND_ADDRESS, ethers.utils.parseEther("1")],
-    ["0xA0394E297BF31018466E2787aD951167aD4106d7", ethers.utils.parseEther("1")],
-    ["0x53077dA6111B0115F2fA6C367938550A27897101", ethers.utils.parseEther("0.5")],
+    ["0x34aA3F359A9D614239015126635CE7732c18fDF3", ethers.utils.parseEther("1")],
+    ["0x61B647D3b5a04Eec7E78B1d9CFbF9deA593c7865", ethers.utils.parseEther("0.5")],
   ];
   // Get the deployed contract
   const yourContract = await hre.ethers.getContract("YourContract", deployer);
 
+  let tx;
   for (const [address, amount] of streamTestData) {
-    await yourContract.addBuilderStream(address, amount);
+    tx = await yourContract.addBuilderStream(address, amount);
+    await tx.wait();
   }
 
   console.log("Transferring ownership to the frontend address:", FRONTEND_ADDRESS);

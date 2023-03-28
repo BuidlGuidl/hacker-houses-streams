@@ -14,7 +14,6 @@ contract YourContract is Ownable {
     mapping(address => BuilderStreamInfo) public streamedBuilders;
     // ToDo. Change to 30 days
     uint256 public frequency = 300 seconds; //2592000; // 30 days
-    address[] public builders;
 
     event Withdraw(address indexed to, uint256 amount, string reason);
 
@@ -28,10 +27,10 @@ contract YourContract is Ownable {
         uint256 unlockedAmount;
     }
 
-    function allBuildersData() public view returns (BuilderData[] memory) {
-        BuilderData[] memory result = new BuilderData[](builders.length);
-        for (uint256 i = 0; i < builders.length; i++) {
-            address builderAddress = builders[i];
+    function allBuildersData(address[] memory _builders) public view returns (BuilderData[] memory) {
+        BuilderData[] memory result = new BuilderData[](_builders.length);
+        for (uint256 i = 0; i < _builders.length; i++) {
+            address builderAddress = _builders[i];
             BuilderStreamInfo storage builderStream = streamedBuilders[builderAddress];
             result[i] = BuilderData(builderAddress, builderStream.cap, unlockedBuilderAmount(builderAddress));
         }
@@ -51,20 +50,6 @@ contract YourContract is Ownable {
 
     function addBuilderStream(address payable _builder, uint256 _cap) public onlyOwner {
         streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - frequency);
-        builders.push(_builder);
-    }
-
-    function deleteBuilderStream(address payable _builder) public onlyOwner {
-        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
-        require(builderStream.cap > 0, "No active stream for builder");
-        delete streamedBuilders[_builder];
-        for (uint256 i = 0; i < builders.length; i++) {
-            if (builders[i] == _builder) {
-                builders[i] = builders[builders.length - 1];
-                builders.pop();
-                break;
-            }
-        }
     }
 
     function updateBuilderStreamCap(address payable _builder, uint256 _cap) public onlyOwner {
