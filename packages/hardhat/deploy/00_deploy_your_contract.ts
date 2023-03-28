@@ -34,9 +34,10 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   // ToDo. Remove on production.
   console.log("Deploying stream test data...");
-  const FRONTEND_ADDRESS = "0x8393A66F048F181FFD8044Ad7E260222848Dff8f";
+  // const FRONTEND_ADDRESS = "0x8393A66F048F181FFD8044Ad7E260222848Dff8f";
   const streamTestData = [
-    [FRONTEND_ADDRESS, ethers.utils.parseEther("1")],
+    // [FRONTEND_ADDRESS, ethers.utils.parseEther("1")],
+    ["0x60583563d5879c2e59973e5718c7de2147971807", ethers.utils.parseEther("1")],
     ["0x34aA3F359A9D614239015126635CE7732c18fDF3", ethers.utils.parseEther("1")],
     ["0xc1470707Ed388697A15B9B9f1f5f4cC882E28a45", ethers.utils.parseEther("1")],
     ["0x61B647D3b5a04Eec7E78B1d9CFbF9deA593c7865", ethers.utils.parseEther("0.5")],
@@ -50,8 +51,10 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     await tx.wait();
   }
 
-  console.log("Transferring ownership to the frontend address:", FRONTEND_ADDRESS);
-  await yourContract.transferOwnership(FRONTEND_ADDRESS);
+  console.log("Transferring ownership to the frontend address: 0x34aA3F359A9D614239015126635CE7732c18fDF3");
+  await yourContract.transferOwnership("0x34aA3F359A9D614239015126635CE7732c18fDF3");
+  // console.log("Transferring ownership to the frontend address:", FRONTEND_ADDRESS);
+  // await yourContract.transferOwnership(FRONTEND_ADDRESS);
 };
 
 export default deployYourContract;

@@ -7,7 +7,7 @@ import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const streamedBuilders = [
-  "0x8393A66F048F181FFD8044Ad7E260222848Dff8f",
+  "0x60583563d5879c2e59973e5718c7de2147971807",
   "0x34aA3F359A9D614239015126635CE7732c18fDF3",
   "0xc1470707Ed388697A15B9B9f1f5f4cC882E28a45",
   "0x61B647D3b5a04Eec7E78B1d9CFbF9deA593c7865",
