@@ -4,14 +4,21 @@ import { isAddress } from "ethers/lib/utils";
 import Blockies from "react-blockies";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEnsAvatar, useEnsName } from "wagmi";
+import * as chains from "wagmi/chains";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
+import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
-const blockExplorerLink = (address: string, blockExplorer?: string) =>
-  `${blockExplorer || "https://etherscan.io/"}address/${address}`;
+const blockExplorerLink = (network: chains.Chain, address: string) => {
+  const blockExplorerTxURL = network.blockExplorers?.default?.url;
+  if (!blockExplorerTxURL) {
+    return `https://etherscan.io/address/${address}`;
+  }
+
+  return `${blockExplorerTxURL}/address/${address}`;
+};
 
 type TAddressProps = {
   address?: string;
-  blockExplorer?: string;
   disableAddressLink?: boolean;
   format?: "short" | "long";
 };
@@ -19,7 +26,7 @@ type TAddressProps = {
 /**
  * Displays an address (or ENS) with a Blockie image and option to copy address.
  */
-export const Address = ({ address, blockExplorer, disableAddressLink, format }: TAddressProps) => {
+export const Address = ({ address, disableAddressLink, format }: TAddressProps) => {
   const [ens, setEns] = useState<string | null>();
   const [ensAvatar, setEnsAvatar] = useState<string | null>();
   const [addressCopied, setAddressCopied] = useState(false);
@@ -57,7 +64,7 @@ export const Address = ({ address, blockExplorer, disableAddressLink, format }: 
     return <span className="text-error">Wrong address</span>;
   }
 
-  const explorerLink = blockExplorerLink(address, blockExplorer);
+  const explorerLink = blockExplorerLink(getTargetNetwork(), address);
   let displayAddress = address?.slice(0, 5) + "..." + address?.slice(-4);
 
   if (ens) {
