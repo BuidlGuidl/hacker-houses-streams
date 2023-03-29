@@ -3,6 +3,7 @@ import Head from "next/head";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
+import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
@@ -39,9 +40,8 @@ const Home: NextPage = () => {
         <meta name="description" content="Created with 🏗 scaffold-eth" />
       </Head>
 
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <h1 className="font-bold text-center text-3xl w-[90%] leading-3">
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
+      <div className="flex items-center flex-col flex-grow pt-10 mb-20">
+        <h1 className="font-bold text-center text-3xl w-[90%] leading-6">
           Jessy's Hacker House <br />
           <span className="text-xl text-gray-400">BuidlGuidl Grants</span>
         </h1>
@@ -58,26 +58,21 @@ const Home: NextPage = () => {
           <p>This initiative is made possible by BuidlGuidl, with special thanks to Austin Griffith!</p>
         </div>
 
-        <div className="mt-6">
+        <div className="my-6 flex flex-col items-center">
+          <p className="font-bold mb-2">Stream contract Balance</p>
+          <Address address={streamContract?.address} />
+          <Balance address={streamContract?.address} className="text-3xl" />
           {address && amIAStreamedBuilder && (
-            <div className="flex flex-col gap-3 items-center">
-              <input
-                type="text"
-                className="input input-ghost focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 w-full font-medium placeholder:text-accent/50 text-gray-400 border-2 border-base-300 bg-base-200 rounded-full text-accent"
-                placeholder="Reason for withdrawing"
-                value={reason}
-                onChange={event => setReason(event.target.value)}
-              />
-              <EtherInput value={amount} onChange={value => setAmount(value)} />
-              <button className="btn btn-primary" onClick={doWithdraw}>
-                Withdraw
-              </button>
+            <div className="mt-6">
+              <label
+                htmlFor="withdraw-modal"
+                className="btn btn-primary btn-sm px-2 rounded-full font-normal space-x-2 normal-case"
+              >
+                <BanknotesIcon className="h-4 w-4" />
+                <span>Withdraw</span>
+              </label>
             </div>
           )}
-        </div>
-        <div className="my-6 flex flex-col">
-          <span className="font-bold">Stream contract Balance</span>{" "}
-          <Balance address={streamContract?.address} className="text-3xl" />
         </div>
         <h1 className="mt-5 mb-3 font-bold text-xl">List of Hackers</h1>
         <div>
@@ -101,6 +96,32 @@ const Home: NextPage = () => {
           })}
         </div>
       </div>
+      <input type="checkbox" id="withdraw-modal" className="modal-toggle" />
+      <label htmlFor="withdraw-modal" className="modal cursor-pointer">
+        <label className="modal-box relative">
+          {/* dummy input to capture event onclick on modal box */}
+          <input className="h-0 w-0 absolute top-0 left-0" />
+          <h3 className="text-xl font-bold mb-8">Withdraw from your stream</h3>
+          <label htmlFor="withdraw-modal" className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3">
+            ✕
+          </label>
+          <div className="space-y-3">
+            <div className="flex flex-col gap-6 items-center">
+              <input
+                type="text"
+                className="input input-ghost focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 w-full font-medium placeholder:text-accent/50 text-gray-400 border-2 border-base-300 bg-base-200 rounded-full text-accent"
+                placeholder="Reason for withdrawing"
+                value={reason}
+                onChange={event => setReason(event.target.value)}
+              />
+              <EtherInput value={amount} onChange={value => setAmount(value)} />
+              <button className="btn btn-primary btn-sm" onClick={doWithdraw}>
+                Withdraw
+              </button>
+            </div>
+          </div>
+        </label>
+      </label>
     </>
   );
 };
