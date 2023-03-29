@@ -40,11 +40,24 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10">
-        <h1 className="font-bold text-center text-3xl">
+        <h1 className="font-bold text-center text-3xl w-[90%] leading-3">
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           Jessy's Hacker House <br />
-          BG grants
+          <span className="text-xl text-gray-400">BuidlGuidl Grants</span>
         </h1>
+        <div className="max-w-[40rem] m-auto w-[90%]">
+          <p>
+            We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source
+            developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions
+            to the ecosystem.
+          </p>
+          <p>
+            Chosen developers can submit their monthly projects, automatically claim grant streams, and showcase their
+            work to the public.
+          </p>
+          <p>This initiative is made possible by BuidlGuidl, with special thanks to Austin Griffith!</p>
+        </div>
+
         <div className="mt-6">
           {address && amIAStreamedBuilder && (
             <div className="flex flex-col gap-3 items-center">
