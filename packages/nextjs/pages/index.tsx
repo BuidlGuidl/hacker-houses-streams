@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   const events = useScaffoldEventRead({
     contractName: "YourContract",
     eventName: "Withdraw",
-    fromBlock: 0,
+    fromBlock: Number(process.env.NEXT_PUBLIC_DEPLOY_BLOCK) || 0,
     blockData: true,
   });
 
