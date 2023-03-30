@@ -151,8 +151,8 @@ const Home: NextPage = () => {
           {/* dummy input to capture event onclick on modal box */}
           <input className="h-0 w-0 absolute top-0 left-0" />
           <h3 className="text-xl font-bold mb-8">
+            <p className="mb-1">Work History</p>
             <Address address={selectedAddress} />
-            Withdraw History
           </h3>
           <label htmlFor="withdraw-events-modal" className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3">
             ✕
@@ -160,26 +160,24 @@ const Home: NextPage = () => {
           <div className="space-y-3">
             <ul>
               {filteredEvents.length > 0 ? (
-                <table className="border-collapse table-auto w-full text-sm">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Reason</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredEvents.map(event => (
-                      <tr key={event.log.transactionHash}>
-                        <td>{new Date(event.block.timestamp).toISOString().split("T")[0]}</td>
-                        <td>{event.args.reason}</td>
-                        <td className="text-right">Ξ {ethers.utils.formatEther(event.args.amount.toString())}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <div className="flex flex-col">
+                  {filteredEvents.map(event => (
+                    <div key={event.log.transactionHash} className="flex flex-col">
+                      <div>
+                        <span className="font-bold">Date: </span>
+                        {new Date(event.block.timestamp).toISOString().split("T")[0]}
+                      </div>
+                      <div>
+                        <span className="font-bold">Amount: </span>Ξ{" "}
+                        {ethers.utils.formatEther(event.args.amount.toString())}
+                      </div>
+                      <div>{event.args.reason}</div>
+                      <hr className="my-8" />
+                    </div>
+                  ))}
+                </div>
               ) : (
-                <p>No withdraws</p>
+                <p>No work history</p>
               )}
             </ul>
           </div>
