@@ -165,7 +165,7 @@ const Home: NextPage = () => {
                     <div key={event.log.transactionHash} className="flex flex-col">
                       <div>
                         <span className="font-bold">Date: </span>
-                        {new Date(event.block.timestamp).toISOString().split("T")[0]}
+                        {new Date(event.block.timestamp * 1000).toISOString().split("T")[0]}
                       </div>
                       <div>
                         <span className="font-bold">Amount: </span>Ξ{" "}
