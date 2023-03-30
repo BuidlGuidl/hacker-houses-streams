@@ -5,7 +5,12 @@ import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import {
+  useDeployedContractInfo,
+  useScaffoldContractRead,
+  useScaffoldContractWrite,
+  useScaffoldEventRead,
+} from "~~/hooks/scaffold-eth";
 
 const streamedBuilders = [
   "0x60583563d5879c2e59973e5718c7de2147971807",
@@ -18,6 +23,8 @@ const Home: NextPage = () => {
   const { address } = useAccount();
   const [reason, setReason] = useState("");
   const [amount, setAmount] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState("");
+  const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
   const { data: streamContract } = useDeployedContractInfo("YourContract");
 
   const { data: allBuildersData } = useScaffoldContractRead({
@@ -30,6 +37,13 @@ const Home: NextPage = () => {
     contractName: "YourContract",
     functionName: "streamWithdraw",
     args: [ethers.utils.parseEther(amount || "0"), reason],
+  });
+
+  const events = useScaffoldEventRead({
+    contractName: "YourContract",
+    eventName: "Withdraw",
+    fromBlock: 0,
+    blockData: true,
   });
 
   const amIAStreamedBuilder = allBuildersData?.some(builderData => builderData.builderAddress === address);
@@ -83,7 +97,16 @@ const Home: NextPage = () => {
             return (
               <div className="pb-8 flex gap-4" key={builderData.builderAddress}>
                 <div className="w-1/2 flex">
-                  <Address address={builderData.builderAddress} />
+                  <label
+                    htmlFor="withdraw-events-modal"
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setSelectedAddress(builderData.builderAddress);
+                      setFilteredEvents(events.filter((event: any) => event.args.to === builderData.builderAddress));
+                    }}
+                  >
+                    <Address address={builderData.builderAddress} disableAddressLink={true} />
+                  </label>
                 </div>
                 <div className="flex flex-col items-center">
                   <div>
@@ -119,6 +142,46 @@ const Home: NextPage = () => {
                 Withdraw
               </button>
             </div>
+          </div>
+        </label>
+      </label>
+      <input type="checkbox" id="withdraw-events-modal" className="modal-toggle" />
+      <label htmlFor="withdraw-events-modal" className="modal cursor-pointer">
+        <label className="modal-box relative">
+          {/* dummy input to capture event onclick on modal box */}
+          <input className="h-0 w-0 absolute top-0 left-0" />
+          <h3 className="text-xl font-bold mb-8">
+            <Address address={selectedAddress} />
+            Withdraw History
+          </h3>
+          <label htmlFor="withdraw-events-modal" className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3">
+            ✕
+          </label>
+          <div className="space-y-3">
+            <ul>
+              {filteredEvents.length > 0 ? (
+                <table className="border-collapse table-auto w-full text-sm">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Reason</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredEvents.map(event => (
+                      <tr key={event.log.transactionHash}>
+                        <td>{new Date(event.block.timestamp).toISOString().split("T")[0]}</td>
+                        <td>{event.args.reason}</td>
+                        <td className="text-right">Ξ {ethers.utils.formatEther(event.args.amount.toString())}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No withdraws</p>
+              )}
+            </ul>
           </div>
         </label>
       </label>
