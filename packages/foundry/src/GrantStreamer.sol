@@ -28,11 +28,15 @@ contract GrantStreamer is Owned {
     }
 
     function allBuildersData(address[] memory _builders) public view returns (BuilderData[] memory) {
-        BuilderData[] memory result = new BuilderData[](_builders.length);
-        for (uint256 i = 0; i < _builders.length; i++) {
+        uint256 totalBuilders = _builders.length;
+        BuilderData[] memory result = new BuilderData[](totalBuilders);
+        for (uint256 i; i < totalBuilders;) {
             address builderAddress = _builders[i];
             BuilderStreamInfo storage builderStream = streamedBuilders[builderAddress];
             result[i] = BuilderData(builderAddress, builderStream.cap, unlockedBuilderAmount(builderAddress));
+            unchecked {
+                ++i;
+            }
         }
         return result;
     }
