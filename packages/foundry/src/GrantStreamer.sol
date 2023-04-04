@@ -81,5 +81,4 @@ contract GrantStreamer is Owned {
 
     // to support receiving ETH by default
     receive() external payable {}
-    fallback() external payable {}
 }
