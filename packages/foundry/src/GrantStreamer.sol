@@ -27,11 +27,11 @@ contract GrantStreamer is Owned {
         uint256 unlockedAmount;
     }
 
-    function allBuildersData(address[] memory _builders) public view returns (BuilderData[] memory) {
-        uint256 totalBuilders = _builders.length;
+    function allBuildersData(address[] memory builders) public view returns (BuilderData[] memory) {
+        uint256 totalBuilders = builders.length;
         BuilderData[] memory result = new BuilderData[](totalBuilders);
         for (uint256 i; i < totalBuilders;) {
-            address builderAddress = _builders[i];
+            address builderAddress = builders[i];
             BuilderStreamInfo storage builderStream = streamedBuilders[builderAddress];
             result[i] = BuilderData(builderAddress, builderStream.cap, unlockedBuilderAmount(builderAddress));
             unchecked {
@@ -41,8 +41,8 @@ contract GrantStreamer is Owned {
         return result;
     }
 
-    function unlockedBuilderAmount(address _builder) public view returns (uint256) {
-        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
+    function unlockedBuilderAmount(address builder) public view returns (uint256) {
+        BuilderStreamInfo memory builderStream = streamedBuilders[builder];
         require(builderStream.cap > 0, "No active stream for builder");
 
         if (block.timestamp - builderStream.last > FREQUENCY) {
@@ -62,13 +62,13 @@ contract GrantStreamer is Owned {
         streamedBuilders[builder].cap = cap.toUint128();
     }
 
-    function streamWithdraw(uint256 _amount, string memory _reason) public {
-        require(address(this).balance >= _amount, "Not enough funds in the contract");
+    function streamWithdraw(uint256 amount, string memory reason) public {
+        require(address(this).balance >= amount, "Not enough funds in the contract");
         BuilderStreamInfo storage builderStream = streamedBuilders[msg.sender];
         require(builderStream.cap > 0, "No active stream for builder");
 
         uint256 totalAmountCanWithdraw = unlockedBuilderAmount(msg.sender);
-        require(totalAmountCanWithdraw >= _amount, "Not enough in the stream");
+        require(totalAmountCanWithdraw >= amount, "Not enough in the stream");
 
         uint256 cappedLast = block.timestamp - FREQUENCY;
         if (builderStream.last < cappedLast) {
@@ -76,11 +76,11 @@ contract GrantStreamer is Owned {
         }
 
         builderStream.last =
-            builderStream.last + ((block.timestamp - builderStream.last) * _amount / totalAmountCanWithdraw).toUint128();
+            builderStream.last + ((block.timestamp - builderStream.last) * amount / totalAmountCanWithdraw).toUint128();
 
-        emit Withdraw(msg.sender, _amount, _reason);
+        emit Withdraw(msg.sender, amount, reason);
 
-        msg.sender.safeTransferETH(_amount);
+        msg.sender.safeTransferETH(amount);
     }
 
     // to support receiving ETH by default
