@@ -2,16 +2,20 @@
 pragma solidity 0.8.19;
 
 import {Owned} from "solmate/auth/Owned.sol";
+import {SafeCastLib} from "solady/utils/SafeCastLib.sol";
+import {SafeTransferLib} from "solady/utils/SafeTransferLib.sol";
 
 contract GrantStreamer is Owned {
+    using SafeCastLib for uint256;
+    using SafeTransferLib for address;
+
     struct BuilderStreamInfo {
-        uint256 cap;
-        uint256 last;
+        uint128 cap;
+        uint128 last;
     }
 
     mapping(address => BuilderStreamInfo) public streamedBuilders;
-    // ToDo. Change to 30 days
-    uint256 public frequency = 300 seconds; //2592000; // 30 days
+    uint256 public constant FREQUENCY = 30 days;
 
     event Withdraw(address indexed to, uint256 amount, string reason);
 
@@ -37,21 +41,21 @@ contract GrantStreamer is Owned {
         BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
         require(builderStream.cap > 0, "No active stream for builder");
 
-        if (block.timestamp - builderStream.last > frequency) {
+        if (block.timestamp - builderStream.last > FREQUENCY) {
             return builderStream.cap;
         }
 
-        return (builderStream.cap * (block.timestamp - builderStream.last)) / frequency;
+        return (builderStream.cap * (block.timestamp - builderStream.last)) / FREQUENCY;
     }
 
-    function addBuilderStream(address payable _builder, uint256 _cap) public onlyOwner {
-        streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - frequency);
+    function addBuilderStream(address payable builder, uint256 cap) public onlyOwner {
+        streamedBuilders[builder] = BuilderStreamInfo(cap.toUint128(), (block.timestamp - FREQUENCY).toUint128());
     }
 
-    function updateBuilderStreamCap(address payable _builder, uint256 _cap) public onlyOwner {
-        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
+    function updateBuilderStreamCap(address payable builder, uint256 cap) public onlyOwner {
+        BuilderStreamInfo memory builderStream = streamedBuilders[builder];
         require(builderStream.cap > 0, "No active stream for builder");
-        streamedBuilders[_builder].cap = _cap;
+        streamedBuilders[builder].cap = cap.toUint128();
     }
 
     function streamWithdraw(uint256 _amount, string memory _reason) public {
@@ -62,16 +66,15 @@ contract GrantStreamer is Owned {
         uint256 totalAmountCanWithdraw = unlockedBuilderAmount(msg.sender);
         require(totalAmountCanWithdraw >= _amount, "Not enough in the stream");
 
-        uint256 cappedLast = block.timestamp - frequency;
+        uint256 cappedLast = block.timestamp - FREQUENCY;
         if (builderStream.last < cappedLast) {
-            builderStream.last = cappedLast;
+            builderStream.last = cappedLast.toUint128();
         }
 
         builderStream.last =
-            builderStream.last + ((block.timestamp - builderStream.last) * _amount / totalAmountCanWithdraw);
+            builderStream.last + ((block.timestamp - builderStream.last) * _amount / totalAmountCanWithdraw).toUint128();
 
-        (bool sent,) = msg.sender.call{value: _amount}("");
-        require(sent, "Failed to send Ether");
+        msg.sender.safeTransferETH(_amount);
 
         emit Withdraw(msg.sender, _amount, _reason);
     }

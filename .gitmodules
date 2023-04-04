@@ -4,3 +4,6 @@
 [submodule "packages/foundry/lib/solmate"]
 	path = packages/foundry/lib/solmate
 	url = https://github.com/transmissions11/solmate
+[submodule "packages/foundry/lib/solady"]
+	path = packages/foundry/lib/solady
+	url = https://github.com/vectorized/solady
