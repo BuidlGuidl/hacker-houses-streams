@@ -78,9 +78,9 @@ contract GrantStreamer is Owned {
         builderStream.last =
             builderStream.last + ((block.timestamp - builderStream.last) * _amount / totalAmountCanWithdraw).toUint128();
 
-        msg.sender.safeTransferETH(_amount);
-
         emit Withdraw(msg.sender, _amount, _reason);
+
+        msg.sender.safeTransferETH(_amount);
     }
 
     // to support receiving ETH by default
