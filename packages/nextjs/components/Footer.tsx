@@ -1,6 +1,5 @@
 import { Faucet } from "./scaffold-eth";
 import { hardhat } from "wagmi/chains";
-import { HeartIcon } from "@heroicons/react/24/outline";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
@@ -18,14 +17,23 @@ export const Footer = () => {
         <ul className="menu menu-horizontal w-full">
           <div className="flex justify-center items-center gap-2 text-sm w-full">
             <div>
-              Built with <HeartIcon className="inline-block h-4 w-4" /> at 🏰{" "}
+              🏰{" "}
               <a
-                href="https://buidlguidl.com/"
+                href="https://twitter.com/buidlguidl"
                 target="_blank"
                 rel="noreferrer"
                 className="underline underline-offset-2"
               >
                 BuidlGuidl
+              </a>{" "}
+              && 🧑‍🎤{" "}
+              <a
+                href="https://twitter.com/wehack247"
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-2"
+              >
+                Jessy's Hacker House
               </a>
             </div>
           </div>

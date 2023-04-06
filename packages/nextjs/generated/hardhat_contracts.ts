@@ -5,18 +5,31 @@ export default {
       chainId: "31337",
       contracts: {
         YourContract: {
-          address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          address: "0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154",
           abi: [
             {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "startingOwner",
-                  type: "address",
-                },
-              ],
+              inputs: [],
               stateMutability: "nonpayable",
               type: "constructor",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "AddBuilder",
+              type: "event",
             },
             {
               anonymous: false,
@@ -52,6 +65,25 @@ export default {
                   name: "amount",
                   type: "uint256",
                 },
+              ],
+              name: "UpdateBuilder",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
                 {
                   indexed: false,
                   internalType: "string",
@@ -65,6 +97,24 @@ export default {
             {
               stateMutability: "payable",
               type: "fallback",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address[]",
+                  name: "_builders",
+                  type: "address[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "_caps",
+                  type: "uint256[]",
+                },
+              ],
+              name: "addBatch",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
             },
             {
               inputs: [
@@ -260,7 +310,7 @@ export default {
       chainId: "11155111",
       contracts: {
         YourContract: {
-          address: "0xed1f56F2c9Aa4c62A5C7ba899F18614F9e8219e5",
+          address: "0x2Be18e07C7be0a2CC408C9E02C90203B2052D7DE",
           abi: [
             {
               inputs: [

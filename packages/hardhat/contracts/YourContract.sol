@@ -13,13 +13,13 @@ contract YourContract is Ownable {
     }
     mapping(address => BuilderStreamInfo) public streamedBuilders;
     // ToDo. Change to 30 days
-    uint256 public frequency = 300 seconds; //2592000; // 30 days
+    uint256 public frequency = 2592000; // 30 days
 
     event Withdraw(address indexed to, uint256 amount, string reason);
+    event AddBuilder(address indexed to, uint256 amount);
+    event UpdateBuilder(address indexed to, uint256 amount);
 
-    constructor(address startingOwner) {
-      _transferOwnership(startingOwner);
-    }
+    constructor() { }
 
     struct BuilderData {
         address builderAddress;
@@ -50,12 +50,21 @@ contract YourContract is Ownable {
 
     function addBuilderStream(address payable _builder, uint256 _cap) public onlyOwner {
         streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - frequency);
+        emit AddBuilder(_builder, _cap);
+    }
+
+    function addBatch(address[] memory _builders, uint256[] memory _caps) public onlyOwner {
+        require(_builders.length == _caps.length, "Lengths are not equal");
+        for (uint256 i = 0; i < _builders.length; i++) {
+            addBuilderStream(payable(_builders[i]), _caps[i]);
+        }
     }
 
     function updateBuilderStreamCap(address payable _builder, uint256 _cap) public onlyOwner {
         BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
         require(builderStream.cap > 0, "No active stream for builder");
         streamedBuilders[_builder].cap = _cap;
+        emit UpdateBuilder(_builder, _cap);
     }
 
     function streamWithdraw(uint256 _amount, string memory _reason) public {

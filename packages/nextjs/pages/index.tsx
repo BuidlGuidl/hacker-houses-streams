@@ -13,10 +13,20 @@ import {
 } from "~~/hooks/scaffold-eth";
 
 const streamedBuilders = [
-  "0x60583563d5879c2e59973e5718c7de2147971807",
-  "0x34aA3F359A9D614239015126635CE7732c18fDF3",
-  "0xc1470707Ed388697A15B9B9f1f5f4cC882E28a45",
-  "0x61B647D3b5a04Eec7E78B1d9CFbF9deA593c7865",
+  "0x46792084f2FA64244ec3Ab3e9F992E01dbFB023d", // saucepoint.eth
+  "0xD623Aa1E070bF70De7Ef830e019496BE3d4cD33A", // 0xyush.eth
+  "0xD84CD3989866c9da74Fb073e38E1F84a0F2a7660", // dhvanipa.eth
+  "0x5cdD68A64C1bfF7eCd276cfc0532db7B15be9a86", // wandcrafting.eth
+  "0xf51C53b2C184Aa43A7d24aA4f0Cf13D0e8b56c51", // zemse.eth
+  "0xD0040c2127cfCb87d1ce71F8360059178897a39a", // 18yearoldvc.eth high byte
+  "0x644B0d17ba4FABcd87260f24a1eEb7fEdb8224c7", // gluonix.eth
+  "0xDA22919e01E249Ba4c96DbA46beE29E4981835FC", // darrylyeo.eth
+
+  "0x97735C60c5E3C2788b7EE570306775e687095D19", // plotchy
+  "0xf1a96Ce1cc0a5103Aeed21bCF89f83020f413Cb5", // philogy
+  "0x83A49Ed2632592FaC36896DDBd27fD612e0d2F77", // Sohan
+  "0xb47A9B6F062c33ED78630478dFf9056687F840f2", // Jtriley
+  "0x9B9ba2d5a3C2799478158B186Bf0326Ff17D0160", // Andrew Miller
 ];
 
 const Home: NextPage = () => {
@@ -69,25 +79,9 @@ const Home: NextPage = () => {
             Chosen developers can submit their monthly projects, automatically claim grant streams, and showcase their
             work to the public.
           </p>
-          <p>This initiative is made possible by BuidlGuidl, with special thanks to Austin Griffith!</p>
+          <p>This initiative is made possible by BuidlGuidl!</p>
         </div>
 
-        <div className="my-6 flex flex-col items-center">
-          <p className="font-bold mb-2">Stream contract Balance</p>
-          <Address address={streamContract?.address} />
-          <Balance address={streamContract?.address} className="text-3xl" />
-          {address && amIAStreamedBuilder && (
-            <div className="mt-6">
-              <label
-                htmlFor="withdraw-modal"
-                className="btn btn-primary btn-sm px-2 rounded-full font-normal space-x-2 normal-case"
-              >
-                <BanknotesIcon className="h-4 w-4" />
-                <span>Withdraw</span>
-              </label>
-            </div>
-          )}
-        </div>
         <h1 className="mt-5 mb-3 font-bold text-xl">List of Hackers</h1>
         <div>
           {allBuildersData?.map(builderData => {
@@ -110,13 +104,30 @@ const Home: NextPage = () => {
                 </div>
                 <div className="flex flex-col items-center">
                   <div>
-                    Ξ {unlocked} / {cap}
+                    Ξ {parseFloat(unlocked).toFixed(4)} / {cap}
                   </div>
                   <progress className="progress w-56" value={percentage} max="100"></progress>
                 </div>
               </div>
             );
           })}
+        </div>
+
+        <div className="my-6 flex flex-col items-center">
+          <p className="font-bold mb-2">Stream contract Balance</p>
+          <Address address={streamContract?.address} />
+          <Balance address={streamContract?.address} className="text-3xl" />
+          {address && amIAStreamedBuilder && (
+            <div className="mt-6">
+              <label
+                htmlFor="withdraw-modal"
+                className="btn btn-primary btn-sm px-2 rounded-full font-normal space-x-2 normal-case"
+              >
+                <BanknotesIcon className="h-4 w-4" />
+                <span>Withdraw</span>
+              </label>
+            </div>
+          )}
         </div>
       </div>
       <input type="checkbox" id="withdraw-modal" className="modal-toggle" />
@@ -133,7 +144,7 @@ const Home: NextPage = () => {
               <input
                 type="text"
                 className="input input-ghost focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 w-full font-medium placeholder:text-accent/50 text-gray-400 border-2 border-base-300 bg-base-200 rounded-full text-accent"
-                placeholder="Reason for withdrawing"
+                placeholder="Reason for withdrawing and link to github plz"
                 value={reason}
                 onChange={event => setReason(event.target.value)}
               />
