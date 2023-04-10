@@ -27,6 +27,8 @@ const streamedBuilders = [
   "0x83A49Ed2632592FaC36896DDBd27fD612e0d2F77", // Sohan
   "0xb47A9B6F062c33ED78630478dFf9056687F840f2", // Jtriley
   "0x9B9ba2d5a3C2799478158B186Bf0326Ff17D0160", // Andrew Miller
+
+  "0xA85572Cd96f1643458f17340b6f0D6549Af482F5", // fiveoutofnine.eth
 ];
 
 const Home: NextPage = () => {
