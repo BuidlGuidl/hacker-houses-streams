@@ -49,6 +49,14 @@ const Home: NextPage = () => {
           name="description"
           content="We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem."
         />
+        <meta property="og:title" content="Jessy's Hacker House | BuidlGuidl Grants" />
+        <meta
+          property="og:description"
+          content="We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem."
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:image" content="https://hackerhouse.buidlguidl.com/thumbnail.png" />
+        <meta property="twitter:image" content="https://hackerhouse.buidlguidl.com/thumbnail.png" />
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
