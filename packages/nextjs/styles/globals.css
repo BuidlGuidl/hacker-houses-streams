@@ -2,11 +2,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-:root,
-[data-theme] {
-  background: hsl(var(--b2));
-}
-
 body {
   min-height: 100vh;
 }

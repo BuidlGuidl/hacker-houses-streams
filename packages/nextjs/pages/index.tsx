@@ -52,11 +52,8 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
-        <h1 className="font-bold text-center text-3xl w-[90%] leading-6">
-          Jessy's Hacker House <br />
-          <span className="text-xl text-gray-400">BuidlGuidl Grants</span>
-        </h1>
-        <div className="max-w-[40rem] m-auto w-[90%]">
+        <p className="font-bold text-center text-3xl w-[90%] leading-6">Welcome!</p>
+        <div className="max-w-[40rem] m-auto w-[90%] mb-10">
           <p>
             We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source
             developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions
@@ -93,7 +90,7 @@ const Home: NextPage = () => {
                   <div>
                     Ξ {parseFloat(unlocked).toFixed(4)} / {cap}
                   </div>
-                  <progress className="progress w-56" value={percentage} max="100"></progress>
+                  <progress className="progress w-56 progress-primary bg-white" value={percentage} max="100"></progress>
                 </div>
               </div>
             );
