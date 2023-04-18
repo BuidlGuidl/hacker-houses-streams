@@ -1,15 +1,10 @@
 # Hacker Houses Streams
 
-⚠️ This project is currently under active development. Things might break. Feel free to check the open issues & create new ones.
+We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem.
 
-Scaffold-Eth 2 is an open-source toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+Chosen developers can submit their monthly projects, automatically claim grant streams, and showcase their work to the public.
 
-It's a new version of scaffold-eth with its core functionality. Built using NextJS, RainbowKit, Hardhat, Wagmi and Typescript.
-
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
-
+This initiative is made possible by BuidlGuidl!
 ## Contents
 
 - [Requirements](#requirements)
@@ -30,7 +25,7 @@ Before you begin, you need to install the following tools:
 
 ## Quickstart
 
-To get started with Scaffold-Eth 2, follow the steps below:
+To get started follow the steps below:
 
 1. Clone this repo & install dependencies
 
@@ -40,7 +35,20 @@ cd hacker-houses-streams
 yarn install
 ```
 
-2. Run a local network in the first terminal:
+2. Start your NextJS app:
+
+```
+yarn start
+```
+Visit your app on: `http://localhost:3000`. 
+
+---
+
+If you want to test the contract locally, you can do so by following steps 3 and 4. 
+Remember to can tweak the app config in `packages/nextjs/scaffold.config.ts` so it points to the local network.
+
+
+3. Run a local network on a second terminal:
 
 ```
 yarn chain
@@ -48,25 +56,13 @@ yarn chain
 
 This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.js`.
 
-3. On a second terminal, deploy the test contract:
+4. On a third terminal, deploy the test contract:
 
 ```
 yarn deploy
 ```
 This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
 
-4. On a third terminal, start your NextJS app:
-
-```
-yarn start
-```
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the contract component or the example ui in the frontend. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
-
-Run smart contract test with `yarn hardhat:test`
-
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-- Edit your frontend in `packages/nextjs/pages`
-- Edit your deployment scripts in `packages/hardhat/deploy`
 
 ## Deploying your Smart Contracts to a Live Network
 Once you are ready to deploy your smart contracts, there are a few things you need to adjust.
