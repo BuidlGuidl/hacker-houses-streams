@@ -62,8 +62,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Scaffold-eth App</title>
-        <meta name="description" content="Created with 🏗 scaffold-eth" />
+        <title>Jessy's Hacker House | BuidlGuidl Grants</title>
+        <meta
+          name="description"
+          content="We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem."
+        />
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
