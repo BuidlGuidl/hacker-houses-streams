@@ -52,7 +52,7 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
-        <p className="font-bold text-center text-3xl w-[90%] leading-6">Welcome!</p>
+        <p className="font-bold text-center text-3xl w-full leading-6 bg-hacker text-primary-content p-2">Welcome!</p>
         <div className="max-w-[40rem] m-auto w-[90%] mb-10">
           <p>
             We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source
@@ -66,7 +66,9 @@ const Home: NextPage = () => {
           <p>This initiative is made possible by BuidlGuidl!</p>
         </div>
 
-        <h1 className="mt-5 mb-3 font-bold text-xl">List of Hackers</h1>
+        <h1 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
+          List of Hackers
+        </h1>
         <div>
           {allBuildersData?.map(builderData => {
             const cap = ethers.utils.formatEther(builderData.cap || 0);
