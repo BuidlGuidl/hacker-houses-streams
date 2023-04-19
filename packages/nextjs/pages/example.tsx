@@ -140,17 +140,15 @@ const Example: NextPage = () => {
             Stream contract balance
           </h1>
           <Address address={streamContract?.address} />
-          <Balance address={streamContract?.address} className="text-3xl" />
+          <Balance address={streamContract?.address} className="text-2xl" />
           {address && amIAStreamedBuilder && (
-            <div className="mt-6">
-              <label
-                htmlFor="withdraw-modal"
-                className="btn btn-primary btn-sm px-2 rounded-full font-normal space-x-2 normal-case"
-              >
-                <BanknotesIcon className="h-4 w-4" />
-                <span>Withdraw</span>
-              </label>
-            </div>
+            <label
+              htmlFor="withdraw-modal"
+              className="btn btn-primary btn-sm px-2 rounded-full font-normal space-x-2 normal-case"
+            >
+              <BanknotesIcon className="h-4 w-4" />
+              <span>Withdraw</span>
+            </label>
           )}
         </div>
       </ResponsiveGridLayout>
