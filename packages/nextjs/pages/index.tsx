@@ -110,7 +110,7 @@ const Home: NextPage = () => {
         </div>
 
         <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
-          Work history
+          Contributions
         </h2>
         <div className="m-auto w-[90%] mb-10">
           {sortedEvents?.map((event: any) => {
@@ -183,7 +183,7 @@ const Home: NextPage = () => {
           {/* dummy input to capture event onclick on modal box */}
           <input className="h-0 w-0 absolute top-0 left-0" />
           <h3 className="text-xl font-bold mb-8">
-            <p className="mb-1">Work History</p>
+            <p className="mb-1">Contributions</p>
             <Address address={selectedAddress} />
           </h3>
           <label htmlFor="withdraw-events-modal" className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3">
@@ -209,7 +209,7 @@ const Home: NextPage = () => {
                   ))}
                 </div>
               ) : (
-                <p>No work history</p>
+                <p>No contributions</p>
               )}
             </ul>
           </div>
