@@ -40,6 +40,8 @@ const Home: NextPage = () => {
     blockData: true,
   });
 
+  const sortedEvents = events?.sort((a: any, b: any) => b.block.number - a.block.number);
+
   const amIAStreamedBuilder = allBuildersData?.some(builderData => builderData.builderAddress === address);
   return (
     <>
@@ -74,9 +76,9 @@ const Home: NextPage = () => {
           <p>This initiative is made possible by BuidlGuidl!</p>
         </div>
 
-        <h1 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
+        <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
           List of Hackers
-        </h1>
+        </h2>
         <div>
           {allBuildersData?.map(builderData => {
             const cap = ethers.utils.formatEther(builderData.cap || 0);
@@ -107,8 +109,33 @@ const Home: NextPage = () => {
           })}
         </div>
 
+        <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
+          Work history
+        </h2>
+        <div className="m-auto w-[90%] mb-10">
+          {sortedEvents?.map((event: any) => {
+            return (
+              <div
+                className="flex flex-col gap-1 mb-6"
+                key={`${event.log.address}_${event.log.blockNumber}`}
+                data-test={`${event.log.address}_${event.log.blockNumber}`}
+              >
+                <div>
+                  <Address address={event.args.to} />
+                </div>
+                <div>
+                  <strong>{new Date(event.block.timestamp * 1000).toISOString().split("T")[0]}</strong>
+                </div>
+                <div>
+                  Ξ {ethers.utils.formatEther(event.args.amount)} / {event.args.reason}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
         <div className="my-6 flex flex-col items-center">
-          <p className="font-bold mb-2">Stream contract Balance</p>
+          <p className="font-bold mb-2 bg-hacker text-primary-content">Stream contract Balance</p>
           <Address address={streamContract?.address} />
           <Balance address={streamContract?.address} className="text-3xl" />
           {address && amIAStreamedBuilder && (
