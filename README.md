@@ -47,6 +47,7 @@ Visit your app on: `http://localhost:3000`.
 If you want to test the contract locally, you can do so by following steps 3 and 4. 
 Remember to can tweak the app config in `packages/nextjs/scaffold.config.ts` so it points to the local network.
 
+If your app is pointing to a live network, copy `.env.example` to `.env` and fill in the required keys.
 
 3. Run a local network on a second terminal:
 
