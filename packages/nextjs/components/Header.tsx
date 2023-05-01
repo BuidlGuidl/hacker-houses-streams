@@ -10,7 +10,7 @@ export const Header = () => {
       <div className="flex-col items-start">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo.png" alt="logo" />
-        <p className="m-0 mt-1 bg-hacker text-primary-content">BuidlGuidl Grants</p>
+        <p className="m-0 mt-1 bg-hacker text-primary-content">BuidlGuidl Grants (zk && cryptography cohort)</p>
       </div>
       <div className="navbar-end flex-grow mr-4">
         <RainbowKitCustomConnectButton />
