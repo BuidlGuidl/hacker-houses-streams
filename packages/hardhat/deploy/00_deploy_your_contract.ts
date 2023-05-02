@@ -1,4 +1,4 @@
-import { builderList } from "../../nextjs/builderList";
+import { builderList } from "../../../builderList";
 import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
