@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
-import { builderList } from "~~/builderList";
 import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
 import {
   useDeployedContractInfo,
   useScaffoldContractRead,
   useScaffoldContractWrite,
-  useScaffoldEventRead,
+  useScaffoldEventHistory,
 } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
@@ -21,7 +20,9 @@ const Home: NextPage = () => {
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
   const { data: streamContract } = useDeployedContractInfo("YourContract");
 
-  const { data: allBuildersData } = useScaffoldContractRead({
+  const [builderList, setBuilderList] = useState<string[]>([]);
+
+  const { data: allBuildersData, isLoading: isLoadingBuilderData } = useScaffoldContractRead({
     contractName: "YourContract",
     functionName: "allBuildersData",
     args: [builderList],
@@ -33,14 +34,27 @@ const Home: NextPage = () => {
     args: [ethers.utils.parseEther(amount || "0"), reason],
   });
 
-  const events = useScaffoldEventRead({
+  const { data: withdrawEvents, isLoading: isLoadingWithdrawEvents } = useScaffoldEventHistory({
     contractName: "YourContract",
     eventName: "Withdraw",
     fromBlock: Number(process.env.NEXT_PUBLIC_DEPLOY_BLOCK) || 0,
     blockData: true,
   });
 
-  const sortedEvents = events?.sort((a: any, b: any) => b.block.number - a.block.number);
+  const { data: addBuilderEvents, isLoading: isLoadingBuilderEvents } = useScaffoldEventHistory({
+    contractName: "YourContract",
+    eventName: "AddBuilder",
+    fromBlock: Number(process.env.NEXT_PUBLIC_DEPLOY_BLOCK) || 0,
+  });
+
+  useEffect(() => {
+    if (addBuilderEvents && addBuilderEvents.length > 0) {
+      const fetchedBuilderList = addBuilderEvents.map((event: any) => event.args.to);
+      setBuilderList(fetchedBuilderList);
+    }
+  }, [addBuilderEvents]);
+
+  const sortedWithdrawEvents = withdrawEvents?.sort((a: any, b: any) => b.block.number - a.block.number);
 
   const amIAStreamedBuilder = allBuildersData?.some(builderData => builderData.builderAddress === address);
   return (
@@ -77,61 +91,85 @@ const Home: NextPage = () => {
         </div>
 
         <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
-          List of Hackers
+          Hacker ETH Streams
         </h2>
         <div>
-          {allBuildersData?.map(builderData => {
-            const cap = ethers.utils.formatEther(builderData.cap || 0);
-            const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
-            const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
-            return (
-              <div className="pb-8 flex gap-4" key={builderData.builderAddress}>
-                <div className="w-1/2 flex">
-                  <label
-                    htmlFor="withdraw-events-modal"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setSelectedAddress(builderData.builderAddress);
-                      setFilteredEvents(events.filter((event: any) => event.args.to === builderData.builderAddress));
-                    }}
-                  >
-                    <Address address={builderData.builderAddress} disableAddressLink={true} />
-                  </label>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div>
-                    Ξ {parseFloat(unlocked).toFixed(4)} / {cap}
+          {isLoadingBuilderData || isLoadingBuilderEvents ? (
+            <div className="my-10 text-center">
+              <div className="text-5xl animate-bounce mb-2">👾</div>
+              <div className="text-lg loading-dots">Loading...</div>
+            </div>
+          ) : (
+            <>
+              {allBuildersData?.map(builderData => {
+                const cap = ethers.utils.formatEther(builderData.cap || 0);
+                const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
+                const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
+                return (
+                  <div className="pb-8 flex gap-4" key={builderData.builderAddress}>
+                    <div className="w-1/2 flex">
+                      <label
+                        htmlFor="withdraw-events-modal"
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setSelectedAddress(builderData.builderAddress);
+                          setFilteredEvents(
+                            withdrawEvents?.filter((event: any) => event.args.to === builderData.builderAddress) || [],
+                          );
+                        }}
+                      >
+                        <Address address={builderData.builderAddress} disableAddressLink={true} />
+                      </label>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div>
+                        Ξ {parseFloat(unlocked).toFixed(4)} / {cap}
+                      </div>
+                      <progress
+                        className="progress w-56 progress-primary bg-white"
+                        value={percentage}
+                        max="100"
+                      ></progress>
+                    </div>
                   </div>
-                  <progress className="progress w-56 progress-primary bg-white" value={percentage} max="100"></progress>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
+            </>
+          )}
         </div>
 
         <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
           Contributions
         </h2>
         <div className="m-auto w-[90%] mb-10">
-          {sortedEvents?.map((event: any) => {
-            return (
-              <div
-                className="flex flex-col gap-1 mb-6"
-                key={`${event.log.address}_${event.log.blockNumber}`}
-                data-test={`${event.log.address}_${event.log.blockNumber}`}
-              >
-                <div>
-                  <Address address={event.args.to} />
-                </div>
-                <div>
-                  <strong>{new Date(event.block.timestamp * 1000).toISOString().split("T")[0]}</strong>
-                </div>
-                <div>
-                  Ξ {ethers.utils.formatEther(event.args.amount)} / {event.args.reason}
-                </div>
-              </div>
-            );
-          })}
+          {isLoadingWithdrawEvents ? (
+            <div className="my-10 text-center">
+              <div className="text-5xl animate-bounce mb-2">👾</div>
+              <div className="text-lg loading-dots">Loading...</div>
+            </div>
+          ) : (
+            <>
+              {sortedWithdrawEvents?.map((event: any) => {
+                return (
+                  <div
+                    className="flex flex-col gap-1 mb-6"
+                    key={`${event.log.address}_${event.log.blockNumber}`}
+                    data-test={`${event.log.address}_${event.log.blockNumber}`}
+                  >
+                    <div>
+                      <Address address={event.args.to} />
+                    </div>
+                    <div>
+                      <strong>{new Date(event.block.timestamp * 1000).toISOString().split("T")[0]}</strong>
+                    </div>
+                    <div>
+                      Ξ {ethers.utils.formatEther(event.args.amount)} / {event.args.reason}
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
 
         <div className="my-6 flex flex-col items-center">
