@@ -5,6 +5,15 @@ We're running an experiment to retroactively fund open-source work by providing 
 Chosen developers can submit their monthly projects, automatically claim grant streams, and showcase their work to the public.
 
 This initiative is made possible by BuidlGuidl!
+
+When forking, TLDR:
+- Paste your builder's addresses into `builderList.ts`.
+- Check the contract deploy script in `packages/hardhat/deploy/00_deploy_your_contract.ts`.
+- Make sure to check `packages/nextjs/scaffold.config.ts`.
+  - You might want to change `targetNetwork` to `chains.hardhat` for local testing.
+- When you deploy to a live network, copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_DEPLOY_BLOCK` to the right value (it optimizes the reading of events)
+  - Make sure to add that ENVAR to your Vercel project as well.
+
 ## Contents
 
 - [Requirements](#requirements)
@@ -27,7 +36,7 @@ Before you begin, you need to install the following tools:
 
 To get started follow the steps below:
 
-1. Clone this repo & install dependencies
+1. Clone/Fork this repo & install dependencies
 
 ```
 git clone https://github.com/buidlguidl/hacker-houses-streams.git

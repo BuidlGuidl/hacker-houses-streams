@@ -1,4 +1,4 @@
-//import { builderList } from "../../nextjs/builderList";
+//import { builderList } from "../../../builderList";
 import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
@@ -43,7 +43,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   */
 
-  console.log("🏷 handing ownership over to atg.eth");
+  console.log("🏷 handing ownership over to jessyio.eth  ");
   await yourContract.transferOwnership("0x61B647D3b5a04Eec7E78B1d9CFbF9deA593c7865");
 
   /*
