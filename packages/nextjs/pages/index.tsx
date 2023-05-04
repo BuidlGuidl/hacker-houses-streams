@@ -46,12 +46,12 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Jessy's Hacker House | BuidlGuidl Grants (Security && Optimizooor Cohort)</title>
+        <title>Jessy's Hacker House | BuidlGuidl Grants (autonomous worlds cohort)</title>
         <meta
           name="description"
           content="We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem."
         />
-        <meta property="og:title" content="Jessy's Hacker House | BuidlGuidl Grants (Security && Optimizooor Cohort)" />
+        <meta property="og:title" content="Jessy's Hacker House | BuidlGuidl Grants (autonomous worlds cohort)" />
         <meta
           property="og:description"
           content="We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem."
@@ -63,7 +63,7 @@ const Home: NextPage = () => {
 
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
         <p className="font-bold text-center text-3xl w-full leading-6 bg-hacker text-primary-content p-2">
-          Security && Optimizooor Cohort
+          autonomous worlds cohort
         </p>
         <div className="max-w-[40rem] m-auto w-[90%] mb-10">
           <p>
