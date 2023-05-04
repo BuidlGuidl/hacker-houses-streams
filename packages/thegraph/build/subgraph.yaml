@@ -1,0 +1,30 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: YouContract
+    network: mainnet
+    source:
+      address: "0x2Be18e07C7be0a2CC408C9E02C90203B2052D7DE"
+      abi: YouContract
+      startBlock: 16992407
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AddBuilder
+        - UpdateBuilder
+        - Withdraw
+      abis:
+        - name: YouContract
+          file: YouContract/abis/YouContract.json
+      eventHandlers:
+        - event: AddBuilder(indexed address,uint256)
+          handler: handleAddBuilder
+        - event: UpdateBuilder(indexed address,uint256)
+          handler: handleUpdateBuilder
+        - event: Withdraw(indexed address,uint256,string)
+          handler: handleWithdraw
+      file: YouContract/YouContract.wasm
