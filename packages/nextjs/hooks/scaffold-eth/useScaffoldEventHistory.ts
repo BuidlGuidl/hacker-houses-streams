@@ -10,34 +10,36 @@ import { useEffect, useState } from 'react';
  * @param config - The config settings
  * @param config.contractName - deployed contract name
  * @param config.eventName - name of the event to listen for
- * @param config.fromBlock - the block number to start reading events from (default: 1000 blocks before current block)
+ * @param config.fromBlock - the block number to start reading events from
  * @param config.filters - filters to be applied to the event (parameterName: value)
  * @param config.blockData - if set to true it will return the block data for each event (default: false)
  * @param config.transactionData - if set to true it will return the transaction data for each event (default: false)
  * @param config.receiptData - if set to true it will return the receipt data for each event (default: false)
  */
-export const useScaffoldEventRead = <
+export const useScaffoldEventHistory = <
   TContractName extends ContractName,
   TEventName extends ExtractAbiEventNames<ContractAbi<TContractName>>,
 >({
-  contractName,
-  eventName,
-  fromBlock,
-  filters,
-  blockData,
-  transactionData,
-  receiptData,
-}: {
+    contractName,
+    eventName,
+    fromBlock,
+    filters,
+    blockData,
+    transactionData,
+    receiptData,
+  }: {
   contractName: TContractName;
   eventName: TEventName;
-  fromBlock?: number;
+  fromBlock: number;
   filters?: any;
   blockData?: boolean;
   transactionData?: boolean;
   receiptData?: boolean;
 }) => {
-  const [events, setEvents] = useState(<any>[]);
-  const { data: deployedContractData } = useDeployedContractInfo(contractName);
+  const [events, setEvents] = useState<any[]>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string>();
+  const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
   const provider = useProvider();
 
   const contract = useContract({
@@ -48,24 +50,15 @@ export const useScaffoldEventRead = <
 
   useEffect(() => {
     async function readEvents() {
-      if (!contract) {
-        console.log("contract not found");
-        return;
-      }
       try {
-        if (!fromBlock) {
-          fromBlock = await provider.getBlockNumber() - 1000;
+        if (!deployedContractData || !contract) {
+          throw new Error("Contract not found")
         }
 
         const fragment = contract.interface.getEvent(eventName);
-        if (!fragment) {
-          console.log("event not found");
-          return;
-        }
-
         const emptyIface = new ethers.utils.Interface([])
         const topicHash = emptyIface.getEventTopic(fragment)
-        const topics = <any>[ topicHash ];
+        const topics = <any>[topicHash];
 
         const indexedParameters = fragment.inputs.filter((input) => input.indexed);
 
@@ -84,12 +77,12 @@ export const useScaffoldEventRead = <
         }
 
         const logs = await provider.getLogs({
-            address: deployedContractData?.address,
-            topics: topics,
-            fromBlock: fromBlock,
+          address: deployedContractData?.address,
+          topics: topics,
+          fromBlock: fromBlock,
         });
         const newEvents = [];
-        for (let i=0; i<logs.length; i++) {
+        for (let i = logs.length - 1; i >= 0; i--) {
           let block;
           if (blockData) {
             block = await provider.getBlock(logs[i].blockHash);
@@ -111,14 +104,25 @@ export const useScaffoldEventRead = <
           }
           newEvents.push(log);
         }
-        setEvents(newEvents.reverse());
+        setEvents(newEvents);
+        setError(undefined);
       }
-      catch (e) {
-          console.log(e);
+      catch (e: any) {
+        console.error(e);
+        setEvents(undefined);
+        setError(e);
+      } finally {
+        setIsLoading(false);
       }
     }
-    readEvents();
-  }, [provider, fromBlock, contractName, eventName, deployedContractData?.address, contract]);
+    if (!deployedContractLoading) {
+      readEvents();
+    }
+  }, [provider, fromBlock, contractName, eventName, deployedContractLoading, deployedContractData?.address, contract]);
 
-  return events;
+  return {
+    data: events,
+    isLoading: isLoading,
+    error: error,
+  };
 };
