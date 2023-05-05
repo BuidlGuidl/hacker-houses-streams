@@ -22,6 +22,11 @@ const Home: NextPage = () => {
 
   const [builderList, setBuilderList] = useState<string[]>([]);
 
+  const { data: owner } = useScaffoldContractRead({
+    contractName: "YourContract",
+    functionName: "owner",
+  });
+
   const { data: allBuildersData, isLoading: isLoadingBuilderData } = useScaffoldContractRead({
     contractName: "YourContract",
     functionName: "allBuildersData",
@@ -189,6 +194,12 @@ const Home: NextPage = () => {
           )}
         </div>
       </div>
+
+      <div className="my-6 flex flex-col items-center">
+        <p className="font-bold mb-2 bg-hacker text-primary-content">Owner</p>
+        <Address address={owner} />
+      </div>
+
       <input type="checkbox" id="withdraw-modal" className="modal-toggle" />
       <label htmlFor="withdraw-modal" className="modal cursor-pointer">
         <label className="modal-box relative">
