@@ -1,4 +1,4 @@
-# Hacker Houses Streams
+# Hacker Houses Streams (Auto worlds)
 
 We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem.
 
