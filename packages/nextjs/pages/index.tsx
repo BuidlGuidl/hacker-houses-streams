@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Head from "next/head";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
+import { useQuery } from "urql";
 import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
-import {
-  useDeployedContractInfo,
-  useScaffoldContractRead,
-  useScaffoldContractWrite,
-  useScaffoldEventHistory,
-} from "~~/hooks/scaffold-eth";
+import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { BuildersQuery } from "~~/queries/AddBuilder";
+import { WithdrawsQuery } from "~~/queries/Withdraw";
 
 const Home: NextPage = () => {
   const { address } = useAccount();
@@ -20,7 +18,18 @@ const Home: NextPage = () => {
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
   const { data: streamContract } = useDeployedContractInfo("YourContract");
 
-  const [builderList, setBuilderList] = useState<string[]>([]);
+  // Get the Hacker list from the subgraph
+  const [addBuilderResult] = useQuery({
+    query: BuildersQuery,
+  });
+  const { data: addBuilderEvents, fetching: isLoadingBuilderEvents } = addBuilderResult;
+  const builderList = addBuilderEvents?.addBuilders.map((builder: any) => builder.to);
+
+  // Get the withdrawals from the subgraph
+  const [withdrawResult] = useQuery({
+    query: WithdrawsQuery,
+  });
+  const { data: withdrawEvents, fetching: isLoadingWithdrawEvents } = withdrawResult;
 
   const { data: owner } = useScaffoldContractRead({
     contractName: "YourContract",
@@ -31,6 +40,7 @@ const Home: NextPage = () => {
     contractName: "YourContract",
     functionName: "allBuildersData",
     args: [builderList],
+    enabled: true,
   });
 
   const { writeAsync: doWithdraw } = useScaffoldContractWrite({
@@ -39,29 +49,8 @@ const Home: NextPage = () => {
     args: [ethers.utils.parseEther(amount || "0"), reason],
   });
 
-  const { data: withdrawEvents, isLoading: isLoadingWithdrawEvents } = useScaffoldEventHistory({
-    contractName: "YourContract",
-    eventName: "Withdraw",
-    fromBlock: Number(process.env.NEXT_PUBLIC_DEPLOY_BLOCK) || 0,
-    blockData: true,
-  });
-
-  const { data: addBuilderEvents, isLoading: isLoadingBuilderEvents } = useScaffoldEventHistory({
-    contractName: "YourContract",
-    eventName: "AddBuilder",
-    fromBlock: Number(process.env.NEXT_PUBLIC_DEPLOY_BLOCK) || 0,
-  });
-
-  useEffect(() => {
-    if (addBuilderEvents && addBuilderEvents.length > 0) {
-      const fetchedBuilderList = addBuilderEvents.map((event: any) => event.args.to);
-      setBuilderList(fetchedBuilderList);
-    }
-  }, [addBuilderEvents]);
-
-  const sortedWithdrawEvents = withdrawEvents?.sort((a: any, b: any) => b.block.number - a.block.number);
-
   const amIAStreamedBuilder = allBuildersData?.some(builderData => builderData.builderAddress === address);
+
   return (
     <>
       <Head>
@@ -118,9 +107,10 @@ const Home: NextPage = () => {
                         className="cursor-pointer"
                         onClick={() => {
                           setSelectedAddress(builderData.builderAddress);
-                          setFilteredEvents(
-                            withdrawEvents?.filter((event: any) => event.args.to === builderData.builderAddress) || [],
+                          const filteredEvents = withdrawEvents?.withdraws.filter(
+                            (event: any) => event.to.toLowerCase() === builderData.builderAddress.toLowerCase(),
                           );
+                          setFilteredEvents(filteredEvents);
                         }}
                       >
                         <Address address={builderData.builderAddress} disableAddressLink={true} />
@@ -154,21 +144,17 @@ const Home: NextPage = () => {
             </div>
           ) : (
             <>
-              {sortedWithdrawEvents?.map((event: any) => {
+              {withdrawEvents?.withdraws.map((event: any) => {
                 return (
-                  <div
-                    className="flex flex-col gap-1 mb-6"
-                    key={`${event.log.address}_${event.log.blockNumber}`}
-                    data-test={`${event.log.address}_${event.log.blockNumber}`}
-                  >
+                  <div className="flex flex-col gap-1 mb-6" key={event.id}>
                     <div>
-                      <Address address={event.args.to} />
+                      <Address address={event.to} />
                     </div>
                     <div>
-                      <strong>{new Date(event.block.timestamp * 1000).toISOString().split("T")[0]}</strong>
+                      <strong>{new Date(event.blockTimestamp * 1000).toISOString().split("T")[0]}</strong>
                     </div>
                     <div>
-                      Ξ {ethers.utils.formatEther(event.args.amount)} / {event.args.reason}
+                      Ξ {ethers.utils.formatEther(event.amount)} / {event.reason}
                     </div>
                   </div>
                 );
@@ -243,16 +229,15 @@ const Home: NextPage = () => {
               {filteredEvents.length > 0 ? (
                 <div className="flex flex-col">
                   {filteredEvents.map(event => (
-                    <div key={event.log.transactionHash} className="flex flex-col">
+                    <div key={event.id} className="flex flex-col">
                       <div>
                         <span className="font-bold">Date: </span>
-                        {new Date(event.block.timestamp * 1000).toISOString().split("T")[0]}
+                        {new Date(event.blockTimestamp * 1000).toISOString().split("T")[0]}
                       </div>
                       <div>
-                        <span className="font-bold">Amount: </span>Ξ{" "}
-                        {ethers.utils.formatEther(event.args.amount.toString())}
+                        <span className="font-bold">Amount: </span>Ξ {ethers.utils.formatEther(event.amount.toString())}
                       </div>
-                      <div>{event.args.reason}</div>
+                      <div>{event.reason}</div>
                       <hr className="my-8" />
                     </div>
                   ))}
