@@ -3,6 +3,7 @@ import Head from "next/head";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import { useLocalStorage } from "usehooks-ts";
 import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { builderList } from "~~/builderList";
@@ -28,6 +29,16 @@ const Example: NextPage = () => {
   const [amount, setAmount] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
+
+  const savedLayouts = useLocalStorage("grid-layout", { lg: layout });
+  const getLayouts = () => {
+    return savedLayouts ? savedLayouts[0] : { lg: layout };
+  };
+
+  const handleLayoutChange = (layout: [], layouts: ReactGridLayout.Layouts) => {
+    localStorage.setItem("grid-layout", JSON.stringify(layouts));
+  };
+
   const { data: streamContract } = useDeployedContractInfo("YourContract");
 
   const { data: allBuildersData } = useScaffoldContractRead({
@@ -69,10 +80,11 @@ const Example: NextPage = () => {
       </Head>
 
       <ResponsiveGridLayout
-        layouts={{ lg: layout }}
+        layouts={getLayouts()}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 3, sm: 3, xs: 2, xxs: 1 }}
         resizeHandles={["ne", "se", "sw", "nw"]}
+        onLayoutChange={handleLayoutChange}
       >
         {/* Left */}
         <div className="flex flex-col justify-start border-2 border-gray-300" key="welcome">
