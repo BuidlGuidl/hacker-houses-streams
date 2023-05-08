@@ -63,6 +63,9 @@ module.exports = {
         hacker:
           "linear-gradient(90deg, #3B76FF 0%, #43D29B 20.16%, #C1EA2E 40.32%, #FFBF2D 58.89%, #FF3841 80.65%, #805C91 101.87%);",
       },
+      gridTemplateColumns: {
+        "nav-footer": "repeat(auto-fit, minmax(min(200px, 100%), 1fr))",
+      },
     },
   },
 };

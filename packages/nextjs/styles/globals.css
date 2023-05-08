@@ -2,8 +2,16 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@font-face {
+  font-family: "PetMe";
+  src: url("../public/assets/PetMe128/PetMe.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   min-height: 100vh;
+  font-family: "PetMe", sans-serif;
 }
 
 h1,
