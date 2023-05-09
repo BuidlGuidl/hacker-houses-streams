@@ -84,13 +84,17 @@ const Home: NextPage = () => {
         <p className="font-bold text-center text-3xl w-full leading-6 bg-hacker text-primary-content p-2">Welcome!</p>
         <div className="max-w-[40rem] m-auto w-[90%] mb-10">
           <p>
-            We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source
-            developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions
-            to the ecosystem.
+            We're running an experiment to fund focused, high-leverage open-source work by providing a monthly UBI to
+            developers, handpicked by Carlos & BG Sand Garden, rewarding them for their ongoing contributions to
+            BuidlGuidl and Ethereum Ecosystem.
           </p>
           <p>
-            Chosen developers can submit their monthly projects, automatically claim grant streams, and showcase their
-            work to the public.
+            Our emphasis is on quality over quantity, striving for well-crafted products. Our approach embraces
+            iteration, refining our builds while fostering a culture of continuous learning and improvement.
+          </p>
+          <p>
+            Developers can submit their monthly projects, automatically claim grant streams, and showcase their work to
+            the public.
           </p>
           <p>This initiative is made possible by BuidlGuidl!</p>
         </div>
