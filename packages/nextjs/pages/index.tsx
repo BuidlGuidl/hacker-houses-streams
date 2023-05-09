@@ -80,8 +80,8 @@ const Home: NextPage = () => {
             BuidlGuidl and Ethereum Ecosystem."
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="og:image" content="https://hackerhouse.buidlguidl.com/thumbnail.png" />
-        <meta property="twitter:image" content="https://hackerhouse.buidlguidl.com/thumbnail.png" />
+        <meta property="og:image" content="https://sand-garden.vercel.app/thumbnail.png" />
+        <meta property="twitter:image" content="https://sand-garden.vercel.app/thumbnail.png" />
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
