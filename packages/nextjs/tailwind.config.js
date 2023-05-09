@@ -8,8 +8,8 @@ module.exports = {
     themes: [
       {
         scaffoldEth: {
-          primary: "#93BBFB",
-          "primary-content": "#080808",
+          primary: "#c913ff",
+          "primary-content": "#49ff13",
           secondary: "#DAE8FF",
           "secondary-content": "#212638",
           accent: "#93BBFB",

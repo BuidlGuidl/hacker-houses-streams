@@ -65,15 +65,19 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Jessy's Hacker House | BuidlGuidl Grants</title>
+        <title>BG Sand Garden | BuidlGuidl Grants</title>
         <meta
           name="description"
-          content="We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem."
+          content="We're running an experiment to fund focused, high-leverage open-source work by providing a monthly UBI to
+            developers, handpicked by Carlos & BG Sand Garden, rewarding them for their ongoing contributions to
+            BuidlGuidl and Ethereum Ecosystem."
         />
-        <meta property="og:title" content="Jessy's Hacker House | BuidlGuidl Grants" />
+        <meta property="og:title" content="BG Sand Garden | BuidlGuidl Grants" />
         <meta
           property="og:description"
-          content="We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source developers, handpicked by Jessy and Jessy's Hacker House, and rewarding them for their ongoing contributions to the ecosystem."
+          content="We're running an experiment to fund focused, high-leverage open-source work by providing a monthly UBI to
+            developers, handpicked by Carlos & BG Sand Garden, rewarding them for their ongoing contributions to
+            BuidlGuidl and Ethereum Ecosystem."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="og:image" content="https://hackerhouse.buidlguidl.com/thumbnail.png" />
@@ -81,7 +85,7 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
-        <p className="font-bold text-center text-3xl w-full leading-6 bg-hacker text-primary-content p-2">Welcome!</p>
+        <p className="font-bold text-center text-3xl w-full leading-6 text-primary-content p-2">Welcome!</p>
         <div className="max-w-[40rem] m-auto w-[90%] mb-10">
           <p>
             We're running an experiment to fund focused, high-leverage open-source work by providing a monthly UBI to
@@ -99,9 +103,7 @@ const Home: NextPage = () => {
           <p>This initiative is made possible by BuidlGuidl!</p>
         </div>
 
-        <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
-          Hacker ETH Streams
-        </h2>
+        <h2 className="mt-5 mb-10 font-bold text-xl text-primary-content p-2 w-full text-center">Hacker ETH Streams</h2>
         <div>
           {isLoadingBuilderData || isLoadingBuilderEvents ? (
             <div className="my-10 text-center">
@@ -115,8 +117,8 @@ const Home: NextPage = () => {
                 const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
                 const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
                 return (
-                  <div className="pb-8 flex gap-4" key={builderData.builderAddress}>
-                    <div className="w-1/2 flex">
+                  <div className="pb-8 flex flex-col md:flex-row gap-1 md:gap-4" key={builderData.builderAddress}>
+                    <div className="md:w-1/2 flex justify-center md:justify-end">
                       <label
                         htmlFor="withdraw-events-modal"
                         className="cursor-pointer"
@@ -147,9 +149,7 @@ const Home: NextPage = () => {
           )}
         </div>
 
-        <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
-          Contributions
-        </h2>
+        <h2 className="mt-5 mb-10 font-bold text-xl text-primary-content p-2 w-full text-center">Contributions</h2>
         <div className="m-auto w-[90%] mb-10">
           {isLoadingWithdrawEvents ? (
             <div className="my-10 text-center">
@@ -158,6 +158,11 @@ const Home: NextPage = () => {
             </div>
           ) : (
             <>
+              {sortedWithdrawEvents?.length === 0 && (
+                <div className="my-2 text-center">
+                  <div className="text-lg">No contributions yet!</div>
+                </div>
+              )}
               {sortedWithdrawEvents?.map((event: any) => {
                 return (
                   <div
@@ -182,7 +187,7 @@ const Home: NextPage = () => {
         </div>
 
         <div className="my-6 flex flex-col items-center">
-          <p className="font-bold mb-2 bg-hacker text-primary-content">Stream contract Balance</p>
+          <p className="font-bold mb-2 text-primary-content">Stream contract Balance</p>
           <Address address={streamContract?.address} />
           <Balance address={streamContract?.address} className="text-3xl" />
           {address && amIAStreamedBuilder && (
@@ -197,11 +202,10 @@ const Home: NextPage = () => {
             </div>
           )}
         </div>
-      </div>
-
-      <div className="my-6 flex flex-col items-center">
-        <p className="font-bold mb-2 bg-hacker text-primary-content">Owner</p>
-        <Address address={owner} />
+        <div className="flex flex-col items-center">
+          <p className="font-bold mb-2 text-primary-content">Owner</p>
+          <Address address={owner} />
+        </div>
       </div>
 
       <input type="checkbox" id="withdraw-modal" className="modal-toggle" />

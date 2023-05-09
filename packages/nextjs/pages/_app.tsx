@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { AppProps } from "next/app";
+import { Share_Tech_Mono } from "@next/font/google";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import NextNProgress from "nextjs-progressbar";
@@ -13,6 +14,8 @@ import { useAppStore } from "~~/services/store/store";
 import { wagmiClient } from "~~/services/web3/wagmiClient";
 import { appChains } from "~~/services/web3/wagmiConnectors";
 import "~~/styles/globals.css";
+
+const shareTechMono = Share_Tech_Mono({ subsets: ["latin"], weight: "400" });
 
 const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const price = useEthPrice();
@@ -28,7 +31,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
     <WagmiConfig client={wagmiClient}>
       <NextNProgress />
       <RainbowKitProvider chains={appChains.chains} avatar={BlockieAvatar}>
-        <div className="flex flex-col min-h-screen">
+        <div className={`flex flex-col min-h-screen ${shareTechMono.className}`}>
           <Header />
           <main className="relative flex flex-col flex-1">
             <Component {...pageProps} />

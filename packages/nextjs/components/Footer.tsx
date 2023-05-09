@@ -25,15 +25,6 @@ export const Footer = () => {
                 className="underline underline-offset-2"
               >
                 BuidlGuidl
-              </a>{" "}
-              && 🧑‍🎤{" "}
-              <a
-                href="https://twitter.com/wehack247"
-                target="_blank"
-                rel="noreferrer"
-                className="underline underline-offset-2"
-              >
-                Jessy's Hacker House
               </a>
             </div>
           </div>
