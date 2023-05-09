@@ -103,7 +103,7 @@ const Home: NextPage = () => {
           <p>This initiative is made possible by BuidlGuidl!</p>
         </div>
 
-        <h2 className="mt-5 mb-10 font-bold text-xl text-primary-content p-2 w-full text-center">Hacker ETH Streams</h2>
+        <h2 className="my-5 font-bold text-xl text-primary-content p-2 w-full text-center">Hacker ETH Streams</h2>
         <div>
           {isLoadingBuilderData || isLoadingBuilderEvents ? (
             <div className="my-10 text-center">
@@ -117,7 +117,10 @@ const Home: NextPage = () => {
                 const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
                 const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
                 return (
-                  <div className="pb-8 flex flex-col md:flex-row gap-1 md:gap-4" key={builderData.builderAddress}>
+                  <div
+                    className="pb-8 flex flex-col md:flex-row gap-1 md:gap-6 md:items-end"
+                    key={builderData.builderAddress}
+                  >
                     <div className="md:w-1/2 flex justify-center md:justify-end">
                       <label
                         htmlFor="withdraw-events-modal"
@@ -149,7 +152,7 @@ const Home: NextPage = () => {
           )}
         </div>
 
-        <h2 className="mt-5 mb-10 font-bold text-xl text-primary-content p-2 w-full text-center">Contributions</h2>
+        <h2 className="my-5 font-bold text-xl text-primary-content p-2 w-full text-center">Contributions</h2>
         <div className="m-auto w-[90%] mb-10">
           {isLoadingWithdrawEvents ? (
             <div className="my-10 text-center">
