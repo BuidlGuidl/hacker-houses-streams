@@ -90,7 +90,7 @@ const Home: NextPage = () => {
           <p>
             We're running an experiment to fund focused, high-leverage open-source work by providing a monthly UBI to
             developers, handpicked by Carlos & BG Sand Garden, rewarding them for their ongoing contributions to
-            BuidlGuidl and Ethereum Ecosystem.
+            BuidlGuidl and the Ethereum Ecosystem.
           </p>
           <p>
             Our emphasis is on quality over quantity, striving for well-crafted products. Our approach embraces
