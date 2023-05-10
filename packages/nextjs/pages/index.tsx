@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Head from "next/head";
+import Link from "next/link";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
@@ -64,26 +64,6 @@ const Home: NextPage = () => {
   const amIAStreamedBuilder = allBuildersData?.some(builderData => builderData.builderAddress === address);
   return (
     <>
-      <Head>
-        <title>BG Sand Garden | BuidlGuidl Grants</title>
-        <meta
-          name="description"
-          content="We're running an experiment to fund focused, high-leverage open-source work by providing a monthly UBI to
-            developers, handpicked by Carlos & BG Sand Garden, rewarding them for their ongoing contributions to
-            BuidlGuidl and Ethereum Ecosystem."
-        />
-        <meta property="og:title" content="BG Sand Garden | BuidlGuidl Grants" />
-        <meta
-          property="og:description"
-          content="We're running an experiment to fund focused, high-leverage open-source work by providing a monthly UBI to
-            developers, handpicked by Carlos & BG Sand Garden, rewarding them for their ongoing contributions to
-            BuidlGuidl and Ethereum Ecosystem."
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta property="og:image" content="https://sand-garden.vercel.app/thumbnail.png" />
-        <meta property="twitter:image" content="https://sand-garden.vercel.app/thumbnail.png" />
-      </Head>
-
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
         <p className="font-bold text-center text-3xl w-full leading-6 text-primary-content p-2">Welcome!</p>
         <div className="max-w-[40rem] m-auto w-[90%] mb-10">
@@ -101,6 +81,12 @@ const Home: NextPage = () => {
             the public.
           </p>
           <p>This initiative is made possible by BuidlGuidl!</p>
+          <p>
+            Read more at the{" "}
+            <Link href="/faq" className="underline underline-offset-2 text-primary">
+              F.A.Q
+            </Link>
+          </p>
         </div>
 
         <h2 className="my-5 font-bold text-xl text-primary-content p-2 w-full text-center">Hacker ETH Streams</h2>
