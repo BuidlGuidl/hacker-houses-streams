@@ -32,7 +32,7 @@ export const Balance = ({ address, className = "" }: TBalanceProps) => {
 
   return (
     <button
-      className={`btn btn-sm btn-ghost flex flex-col font-normal items-center hover:bg-transparent ${className}`}
+      className={`btn btn-sm btn-ghost px-0 flex flex-col font-normal items-center hover:bg-transparent ${className}`}
       onClick={onToggleBalance}
     >
       <div className="w-full flex items-center justify-center">
