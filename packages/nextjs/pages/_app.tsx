@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type { AppProps } from "next/app";
-import { Share_Tech_Mono } from "@next/font/google";
+import { Share_Tech_Mono } from "next/font/google";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import NextNProgress from "nextjs-progressbar";
