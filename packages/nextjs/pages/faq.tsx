@@ -3,11 +3,11 @@ import React from "react";
 const Faq = () => {
   return (
     <div className="max-w-3xl px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-primary-content bg-primary inline-block p-2">F.A.Q.</h1>
+      <h1 className="text-4xl font-bold mb-8 text-secondary bg-primary inline-block p-2">F.A.Q.</h1>
 
-      <div className="space-y-6">
+      <div className="space-y-10">
         <div className="">
-          <h2 className="text-lg font-bold text-primary-content">What is the BG Sand Garden?</h2>
+          <h2 className="font-bold text-secondary">What is the BG Sand Garden?</h2>
           <p>
             The BG Sand Garden is an initiative by BuidlGuidl aimed at funding focused, high-leverage open-source
             projects. By providing a monthly UBI to handpicked developers, we support ongoing contributions to the
@@ -16,25 +16,38 @@ const Faq = () => {
         </div>
 
         <div>
-          <h2 className="text-lg font-bold text-primary-content">What are the core values of BG Sand Garden?</h2>
+          <h2 className="font-bold text-secondary">What are the core values of BG Sand Garden?</h2>
           <ul className="list-disc list-inside">
             <li>100% remote / 90% async</li>
             <li>Quality over quantity</li>
             <li>Continuous learning and improvement</li>
-            <li>We are nice to each other</li>
             <li>Keeping things simple & avoid over-engineering / early optimizations</li>
             <li>Iterative spirit: Start simple (but complete) and build from there</li>
+            <li>We are nice to each other</li>
+            <li>Self-accountability</li>
+            <li>Keeping your peers in the loop</li>
           </ul>
         </div>
 
         <div>
-          <h2 className="text-lg font-bold text-primary-content">How can I join the BG Sand Garden?</h2>
-          <p>The first step is to be a member of the BuidlGuild or part of any of the project-focused cohorts.</p>
+          <h2 className="font-bold text-secondary">How can I join the BG Sand Garden?</h2>
+          <p>There is no single path or application process to join the BG Sand Garden.</p>
           <p>
-            People who have joined the BG Sand Garden have proven their ability to consistently deliver value and align
-            with our core values. Candidates for the BG Sand Garden are handpicked by Carlos and the BG Sand Garden
-            team.
+            Members are usually part of the BuidlGuidl or participant in any of the project-focused cohorts, and have
+            proven their ability to consistently deliver value and align with our core values.
           </p>
+        </div>
+        <div>
+          <h2 className="font-bold text-secondary">How does streams work?</h2>
+          <p>
+            Streams represent the MAX amount that a developer can withdraw each month. When full, it doesn't recharge
+            until a withdrawal is made.
+          </p>
+          <p>Developers can withdraw from their stream when working on any of the BG Sand Garden's projects.</p>
+        </div>
+        <div>
+          <h2 className="font-bold text-secondary">Who is funding this initiative?</h2>
+          <p>The BG Sand Garden is funded by the BuidlGuidl.</p>
         </div>
       </div>
     </div>

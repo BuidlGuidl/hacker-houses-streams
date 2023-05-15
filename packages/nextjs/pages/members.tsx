@@ -47,26 +47,27 @@ const Members: NextPage = () => {
 
   return (
     <>
-      <div className="max-w-5xl px-4 py-8">
+      <div className="max-w-3xl px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-primary-content bg-primary inline-block p-2">Members</h1>
-        <div>
+        <div className="mb-16">
+          <p className="mt-0 mb-10">
+            These are the active builders and their streams. You can click on any builder to see their detailed
+            contributions.
+          </p>
           {isLoadingBuilderData || isLoadingBuilderEvents ? (
             <div className="m-10">
               <div className="text-5xl animate-bounce mb-2">👾</div>
               <div className="text-lg loading-dots">Loading...</div>
             </div>
           ) : (
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-6">
               {allBuildersData?.map(builderData => {
                 const cap = ethers.utils.formatEther(builderData.cap || 0);
                 const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
                 const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
                 return (
-                  <div
-                    className="flex flex-col md:flex-row gap-1 md:gap-6 md:items-end"
-                    key={builderData.builderAddress}
-                  >
-                    <div className="flex flex-col items-center">
+                  <div className="flex flex-col md:flex-row gap-2 md:gap-6" key={builderData.builderAddress}>
+                    <div className="flex flex-col md:items-center">
                       <div>
                         Ξ {parseFloat(unlocked).toFixed(4)} / {cap}
                       </div>
