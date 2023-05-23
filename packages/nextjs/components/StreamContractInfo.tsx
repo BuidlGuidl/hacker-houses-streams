@@ -1,7 +1,7 @@
 import React from "react";
 import { BigNumber } from "ethers";
 import { useAccount } from "wagmi";
-import { BanknotesIcon } from "@heroicons/react/24/outline";
+import { BanknotesIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { Address, Balance } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
@@ -27,7 +27,15 @@ export const StreamContractInfo = () => {
   return (
     <>
       <div className="mt-16">
-        <p className="font-bold mb-2 text-secondary">Stream Contract</p>
+        <p className="font-bold mb-2 text-secondary">
+          Stream Contract
+          <span
+            className="tooltip text-white font-normal"
+            data-tip="All streams and contributions are handled by a contract on Optimism"
+          >
+            <QuestionMarkCircleIcon className="h-5 w-5 inline-block ml-2" />
+          </span>
+        </p>
         <div className="flex gap-2 items-center">
           <Address address={streamContract?.address} /> /
           <Balance address={streamContract?.address} className="text-3xl" />

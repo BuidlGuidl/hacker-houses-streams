@@ -22,11 +22,11 @@ const Home: NextPage = () => {
             <Link href="/members" className="link link-primary">
               Members
             </Link>{" "}
-            can submit their monthly{" "}
+            contributing to any of the active{" "}
             <Link href="/projects" className="link link-primary">
               projects
-            </Link>
-            , automatically claim grant streams, and showcase their work to the public.
+            </Link>{" "}
+            can submit their work and claim grant streams, while showcasing their contributions to the public.
           </p>
           <p>This initiative is made possible by BuidlGuidl!</p>
           <p>
