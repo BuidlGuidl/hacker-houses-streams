@@ -16,6 +16,17 @@ const Faq = () => {
         </div>
 
         <div>
+          <h2 className="font-bold text-secondary">
+            What is the difference between the BuidlGuidl and the BG Sand Garden?
+          </h2>
+          <p>
+            The BG Sand Garden is just a working group inside the BuidlGuidl community. Maintaining the spirit of the
+            BuidlGuidl – learning and experimentation – the BG Sand Garden adds intentionality, a focus on quality, and
+            commits to delivering complete projects.
+          </p>
+        </div>
+
+        <div>
           <h2 className="font-bold text-secondary">What are the core values of the BG Sand Garden?</h2>
           <ul className="list-disc list-inside">
             <li>100% remote / 90% async</li>
