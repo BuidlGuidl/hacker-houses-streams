@@ -6,7 +6,7 @@ const Faq = () => {
       <h1 className="text-4xl font-bold mb-8 text-secondary bg-primary inline-block p-2">F.A.Q.</h1>
 
       <div className="space-y-10">
-        <div className="">
+        <div>
           <h2 className="font-bold text-secondary">What is the BG Sand Garden?</h2>
           <p>
             The BG Sand Garden is an initiative by BuidlGuidl aimed at funding focused, high-leverage open-source
@@ -16,15 +16,17 @@ const Faq = () => {
         </div>
 
         <div>
-          <h2 className="font-bold text-secondary">What are the core values of BG Sand Garden?</h2>
+          <h2 className="font-bold text-secondary">What are the core values of the BG Sand Garden?</h2>
           <ul className="list-disc list-inside">
             <li>100% remote / 90% async</li>
             <li>Quality over quantity</li>
             <li>Continuous learning and improvement</li>
             <li>Keeping things simple & avoid over-engineering / early optimizations</li>
             <li>Iterative spirit: Start simple (but complete) and build from there</li>
-            <li>We are nice to each other</li>
+            <li>Avoid bloated processes</li>
+            <li>Being nice to each other</li>
             <li>Self-accountability</li>
+            <li>Self-organization</li>
             <li>Keeping your peers in the loop</li>
           </ul>
         </div>
@@ -37,8 +39,9 @@ const Faq = () => {
             proven their ability to consistently deliver value and align with our core values.
           </p>
         </div>
+
         <div>
-          <h2 className="font-bold text-secondary">How does streams work?</h2>
+          <h2 className="font-bold text-secondary">How do streams work?</h2>
           <p>
             Streams represent the MAX amount that a developer can withdraw each month. When full, it doesn't recharge
             until a withdrawal is made.
