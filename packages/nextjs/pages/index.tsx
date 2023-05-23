@@ -55,7 +55,9 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (addBuilderEvents && addBuilderEvents.length > 0) {
       const fetchedBuilderList = addBuilderEvents.map((event: any) => event.args.to);
-      setBuilderList(fetchedBuilderList);
+      // @ts-ignore
+      const uniqueBuilderList = [...new Set(fetchedBuilderList)];
+      setBuilderList(uniqueBuilderList);
     }
   }, [addBuilderEvents]);
 
@@ -109,6 +111,7 @@ const Home: NextPage = () => {
           ) : (
             <>
               {allBuildersData?.map(builderData => {
+                if (builderData?.cap?.eq(ethers.utils.parseEther("0"))) return;
                 const cap = ethers.utils.formatEther(builderData.cap || 0);
                 const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
                 const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);
