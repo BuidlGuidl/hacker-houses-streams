@@ -11,6 +11,7 @@ export const Header = () => (
   <>
     <Head>
       <title>BG Sand Garden | BuidlGuidl Grants</title>
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
       <meta
         name="description"
         content="We're running an experiment to fund focused, high-leverage open-source work by providing a monthly UBI to
