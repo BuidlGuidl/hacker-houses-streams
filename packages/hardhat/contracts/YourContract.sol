@@ -2,8 +2,13 @@ pragma solidity >=0.8.0 <0.9.0;
 //SPDX-License-Identifier: MIT
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
+//  ___     ___              ___     ___    _  _     ___              ___     ___     ___     ___     ___    _  _
+// | _ )   / __|     o O O  / __|   /   \  | \| |   |   \     o O O  / __|   /   \   | _ \   |   \   | __|  | \| |
+// | _ \  | (_ |    o       \__ \   | - |  | .` |   | |) |   o      | (_ |   | - |   |   /   | |) |  | _|   | .` |
+// |___/   \___|   TS__[O]  |___/   |_|_|  |_|\_|   |___/   TS__[O]  \___|   |_|_|   |_|_\   |___/   |___|  |_|\_|
+// _|"""""|_|"""""| {======|_|"""""|_|"""""|_|"""""|_|"""""| {======|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
+// "`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
 
 contract YourContract is Ownable {
 
@@ -39,7 +44,9 @@ contract YourContract is Ownable {
 
     function unlockedBuilderAmount(address _builder) public view returns (uint256) {
         BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
-        require(builderStream.cap > 0, "No active stream for builder");
+        if (builderStream.cap == 0) {
+            return 0;
+        }
 
         if (block.timestamp - builderStream.last > frequency) {
             return builderStream.cap;

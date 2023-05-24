@@ -45,6 +45,8 @@ const Members: NextPage = () => {
     }
   }, [addBuilderEvents]);
 
+  const sortedBuilders = allBuildersData && [...allBuildersData].reverse();
+
   return (
     <>
       <div className="max-w-3xl px-4 py-8">
@@ -61,7 +63,8 @@ const Members: NextPage = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-6">
-              {allBuildersData?.map(builderData => {
+              {sortedBuilders?.map(builderData => {
+                if (builderData.cap.isZero()) return;
                 const cap = ethers.utils.formatEther(builderData.cap || 0);
                 const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
                 const percentage = Math.floor((parseFloat(unlocked) / parseFloat(cap)) * 100);

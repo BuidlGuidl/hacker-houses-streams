@@ -5,7 +5,7 @@ export default {
       chainId: "10",
       contracts: {
         YourContract: {
-          address: "0x2Be18e07C7be0a2CC408C9E02C90203B2052D7DE",
+          address: "0x2eA63c9C9C114ae85b1027697A906420a23e8572",
           abi: [
             {
               inputs: [],
