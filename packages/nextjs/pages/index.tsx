@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
@@ -11,6 +11,12 @@ import {
   useScaffoldContractWrite,
   useScaffoldEventHistory,
 } from "~~/hooks/scaffold-eth";
+
+type BuilderData = {
+  cap: BigNumber;
+  unlockedAmount: BigNumber;
+  builderAddress: string;
+};
 
 const Home: NextPage = () => {
   const { address } = useAccount();
@@ -63,7 +69,9 @@ const Home: NextPage = () => {
 
   const sortedWithdrawEvents = withdrawEvents?.sort((a: any, b: any) => b.block.number - a.block.number);
 
-  const amIAStreamedBuilder = allBuildersData?.some(builderData => builderData.builderAddress === address);
+  const amIAStreamedBuilder = allBuildersData?.some(
+    (builderData: BuilderData) => builderData.builderAddress === address,
+  );
   return (
     <>
       <Head>
@@ -108,7 +116,7 @@ const Home: NextPage = () => {
             </div>
           ) : (
             <>
-              {allBuildersData?.map(builderData => {
+              {allBuildersData?.map((builderData: BuilderData) => {
                 if (builderData.cap.isZero()) return;
                 const cap = ethers.utils.formatEther(builderData.cap || 0);
                 const unlocked = ethers.utils.formatEther(builderData.unlockedAmount || 0);
