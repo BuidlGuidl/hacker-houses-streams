@@ -4,7 +4,7 @@ We're running an experiment to retroactively fund open-source work by providing 
 
 Chosen developers can submit their monthly projects, automatically claim grant streams, and showcase their work to the public.
 
-This initiative is made possible by BuidlGuidl!
+This initiative is made possible by BuidlGuidl.
 
 When forking, TLDR:
 - Paste your builder's addresses into `builderList.ts`.
