@@ -9,17 +9,17 @@ module.exports = {
       {
         scaffoldEth: {
           primary: "#93BBFB",
-          "primary-content": "#080808",
+          "primary-content": "#212638",
           secondary: "#DAE8FF",
           "secondary-content": "#212638",
           accent: "#93BBFB",
           "accent-content": "#212638",
           neutral: "#212638",
           "neutral-content": "#ffffff",
-          "base-100": "#000000",
+          "base-100": "#ffffff",
           "base-200": "#F9FBFF",
           "base-300": "#DAE8FF",
-          "base-content": "#ffffff",
+          "base-content": "#212638",
           info: "#93BBFB",
           success: "#34EEB6",
           warning: "#FFCF72",
@@ -58,10 +58,6 @@ module.exports = {
         grow: "grow 5s linear infinite",
         "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         zoom: "zoom 1s ease infinite",
-      },
-      backgroundImage: {
-        hacker:
-          "linear-gradient(90deg, #3B76FF 0%, #43D29B 20.16%, #C1EA2E 40.32%, #FFBF2D 58.89%, #FF3841 80.65%, #805C91 101.87%);",
       },
     },
   },

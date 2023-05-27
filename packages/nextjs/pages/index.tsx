@@ -91,7 +91,7 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex items-center flex-col flex-grow pt-10 mb-20">
-        <p className="font-bold text-center text-3xl w-full leading-6 bg-hacker text-primary-content p-2">Welcome!</p>
+        <p className="font-bold text-center text-3xl w-full leading-6 bg-base-300 text-primary-content p-2">Welcome!</p>
         <div className="max-w-[40rem] m-auto w-[90%] mb-10">
           <p>
             We're running an experiment to retroactively fund open-source work by providing a monthly UBI to open-source
@@ -105,7 +105,7 @@ const Home: NextPage = () => {
           <p>This initiative is made possible by BuidlGuidl!</p>
         </div>
 
-        <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
+        <h2 className="mt-5 mb-10 font-bold text-xl bg-base-300 text-primary-content p-2 w-full text-center">
           Hacker ETH Streams
         </h2>
         <div>
@@ -154,7 +154,7 @@ const Home: NextPage = () => {
           )}
         </div>
 
-        <h2 className="mt-5 mb-10 font-bold text-xl bg-hacker text-primary-content p-2 w-full text-center">
+        <h2 className="mt-5 mb-10 font-bold text-xl bg-base-300 text-primary-content p-2 w-full text-center">
           Contributions
         </h2>
         <div className="m-auto w-[90%] mb-10">
@@ -189,7 +189,7 @@ const Home: NextPage = () => {
         </div>
 
         <div className="my-6 flex flex-col items-center">
-          <p className="font-bold mb-2 bg-hacker text-primary-content">Stream contract Balance</p>
+          <p className="font-bold mb-2 bg-base-300 text-primary-content">Stream contract Balance</p>
           <Address address={streamContract?.address} />
           <Balance address={streamContract?.address} className="text-3xl" />
           {address && amIAStreamedBuilder && (
@@ -207,7 +207,7 @@ const Home: NextPage = () => {
       </div>
 
       <div className="my-6 flex flex-col items-center">
-        <p className="font-bold mb-2 bg-hacker text-primary-content">Owner</p>
+        <p className="font-bold mb-2 bg-base-300 text-primary-content">Owner</p>
         <Address address={owner} />
       </div>
 
