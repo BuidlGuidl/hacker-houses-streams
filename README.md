@@ -33,10 +33,10 @@ You get a generic template to set your Hacker House Website. Feel free to add al
 
 Here you can view some examples of active Hacker Houses using this project:
 
-| Hacker House         | Links                                                                                                                                   | Description                                                                                        |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Jessy's Hacker House | [Repo](https://github.com/BuidlGuidl/hacker-houses-streams/tree/jessy-streams-hacker-house) [Live](https://hackerhouse.buidlguidl.com/) | One-page template with Jessy's Hacker House design touch                                           |
-| Sand Garden          | [Repo](https://github.com/BuidlGuidl/hacker-houses-streams/tree/carlos-sand-garden) [Live](http://sandgarden.buidlguidl.com/)           | Multi-page template, includes a Projects section with the list of the projects they are working on |
+| Hacker House         | Links                                                                                                                                          | Description                                                                                        |
+| -------------------- |------------------------------------------------------------------------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------------- |
+| Jessy's Hacker House | [Repo](https://github.com/BuidlGuidl/hacker-houses-streams/tree/jessy-streams-hacker-house) / [Live site](https://hackerhouse.buidlguidl.com/) | One-page template with Jessy's Hacker House design touch                                           |
+| Sand Garden          | [Repo](https://github.com/BuidlGuidl/hacker-houses-streams/tree/carlos-sand-garden) / [Live site](http://sandgarden.buidlguidl.com/)           | Multi-page template, includes a Projects section with the list of the projects they are working on |
 
 ## Steps to set your own Hacker House
 
