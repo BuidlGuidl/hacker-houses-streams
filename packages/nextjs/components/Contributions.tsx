@@ -32,40 +32,35 @@ export const Contributions = ({ withdrawEvents, isLoadingWithdrawEvents }: Contr
   }, [withdrawEvents]);
 
   return (
-    <>
-      <h2 className="mt-5 mb-10 font-bold text-xl bg-base-300 text-primary-content p-2 w-full text-center">
-        Contributions
-      </h2>
-      <div className="m-auto w-[90%] mb-10 max-w-[40rem]">
-        {isLoadingWithdrawEvents ? (
-          <div className="my-10 text-center">
-            <div className="text-5xl animate-bounce mb-2">👾</div>
-            <div className="text-lg loading-dots">Loading...</div>
-          </div>
-        ) : sortedWithdrawEvents && sortedWithdrawEvents.length > 0 ? (
-          sortedWithdrawEvents.map((event: ContributionEvent) => {
-            return (
-              <div
-                className="flex flex-col gap-1 mb-6"
-                key={`${event.log.address}_${event.log.blockNumber}`}
-                data-test={`${event.log.address}_${event.log.blockNumber}`}
-              >
-                <div>
-                  <Address address={event.args.to} />
-                </div>
-                <div>
-                  <strong>{new Date(event.block.timestamp * 1000).toISOString().split("T")[0]}</strong>
-                </div>
-                <div>
-                  Ξ {ethers.utils.formatEther(event.args.amount)} / {event.args.reason}
-                </div>
+    <div className="m-auto w-[90%] mb-10 max-w-[40rem] border p-10 border-primary">
+      {isLoadingWithdrawEvents ? (
+        <div className="my-10 text-center">
+          <div className="text-5xl animate-bounce mb-2">👾</div>
+          <div className="text-lg loading-dots">Loading...</div>
+        </div>
+      ) : sortedWithdrawEvents && sortedWithdrawEvents.length > 0 ? (
+        sortedWithdrawEvents.map((event: ContributionEvent) => {
+          return (
+            <div
+              className="flex flex-col gap-1 mb-6"
+              key={`${event.log.address}_${event.log.blockNumber}`}
+              data-test={`${event.log.address}_${event.log.blockNumber}`}
+            >
+              <div>
+                <Address address={event.args.to} />
               </div>
-            );
-          })
-        ) : (
-          <p>No contributions yet!</p>
-        )}
-      </div>
-    </>
+              <div>
+                <strong>{new Date(event.block.timestamp * 1000).toISOString().split("T")[0]}</strong>
+              </div>
+              <div>
+                Ξ {ethers.utils.formatEther(event.args.amount)} / {event.args.reason}
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <p className="text-center">No contributions yet!</p>
+      )}
+    </div>
   );
 };

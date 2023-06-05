@@ -26,14 +26,14 @@ export const Footer = () => {
               >
                 BuidlGuidl
               </a>{" "}
-              && 🧑‍🎤{" "}
+              && 🏗️{" "}
               <a
-                href="https://twitter.com/wehack247"
+                href="https://github.com/scaffold-eth/scaffold-eth-2"
                 target="_blank"
                 rel="noreferrer"
                 className="underline underline-offset-2"
               >
-                Jessy's Hacker House
+                Scaffold-ETH 2
               </a>
             </div>
           </div>

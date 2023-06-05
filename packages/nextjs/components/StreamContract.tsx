@@ -28,7 +28,7 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
   return (
     <>
       <div className="my-6 flex flex-col items-center">
-        <p className="font-bold mb-2 bg-base-300 text-primary-content">Stream contract Balance</p>
+        <p className="font-bold mb-2 bg-secondary text-secondary-content px-1">Stream contract Balance</p>
         <Address address={streamContract?.address} />
         <Balance address={streamContract?.address} className="text-3xl" />
         {amIAStreamedBuilder && (
@@ -45,7 +45,7 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
       </div>
 
       <div className="my-6 flex flex-col items-center">
-        <p className="font-bold mb-2 bg-base-300 text-primary-content">Owner</p>
+        <p className="font-bold mb-2 bg-secondary text-secondary-content px-1">Owner</p>
         <Address address={owner} />
       </div>
 
