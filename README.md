@@ -18,7 +18,7 @@ Developers can submit their contributions (stored in a Smart Contract), automati
 
 We provide a contract that includes basic features for your Hacker House Stream.
 
-- **Donations to the Hacker House**. Anyone can show their support to the Hacker House by send ETH to the contract.
+- **Donations to the Hacker House**. Anyone can show their support to the Hacker House by sending ETH to the contract.
 - **List of developers and their monthly stream cap**.
 - **Withdrawals**. Each builder can do withdrawals from their available streams when they contribute.
 - **Rechargable streams**. After a withdrawal, the hacker's monthly stream gets recharged during the next 30 days, until reaching their cap (MAX monthly stream).
