@@ -1,6 +1,6 @@
 # Hacker Houses Streams
 
-This **forkable** project aims to provide a platform to retroactively fund open-source work by providing a monthly 
+This **forkable** project aims to provide a platform to retroactively fund open-source work by providing a monthly
 UBI to handpicked open-source developers, rewarding them for their ongoing contributions.
 
 Developers can submit their contributions (stored in a Smart Contract), automatically claim grant streams, and showcase their work to the public.
@@ -18,7 +18,7 @@ Developers can submit their contributions (stored in a Smart Contract), automati
 
 We provide a contract that includes basic features for your Hacker House Stream.
 
-- **Donations to the Hacker House**. Anyone can show their support to the Hacker House by send ETH to the contract.
+- **Donations to the Hacker House**. Anyone can show their support to the Hacker House by sending ETH to the contract.
 - **List of developers and their monthly stream cap**.
 - **Withdrawals**. Each builder can do withdrawals from their available streams when they contribute.
 - **Rechargable streams**. After a withdrawal, the hacker's monthly stream gets recharged during the next 30 days, until reaching their cap (MAX monthly stream).
@@ -34,7 +34,7 @@ You get a generic template to set your Hacker House Website. Feel free to add al
 Here you can view some examples of active Hacker Houses using this project:
 
 | Hacker House         | Links                                                                                                                                     | Description                                                                                        |
-| -------------------- |-------------------------------------------------------------------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------------- |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | Jessy's Hacker House | [Repo](https://github.com/BuidlGuidl/hacker-houses-streams/tree/jessy-streams-hacker-house) / [Site](https://hackerhouse.buidlguidl.com/) | One-page template with Jessy's Hacker House design touch                                           |
 | Sand Garden          | [Repo](https://github.com/BuidlGuidl/hacker-houses-streams/tree/carlos-sand-garden) / [Site](http://sandgarden.buidlguidl.com/)           | Multi-page template, includes a Projects section with the list of the projects they are working on |
 
@@ -122,7 +122,6 @@ This command starts a local network using Hardhat. The network runs on your loca
 
 This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network.
 
-
 3. In a third terminal, start your NextJS app:
 
    ```shell
@@ -130,7 +129,6 @@ This command deploys a test smart contract to the local network. The contract is
    ```
 
 Visit your app on: `http://localhost:3000`.
-
 
 ### 5. Deploy to a Live Network
 
@@ -153,8 +151,8 @@ By default, `yarn deploy `will deploy the contract to the local network. To depl
 yarn deploy --network target_network
 ```
 
-Check the `hardhat.config.js` for the networks that are pre-configured. 
-You can also add other networks on  the `hardhat.config.js` file.
+Check the `hardhat.config.js` for the networks that are pre-configured.
+You can also add other networks on the `hardhat.config.js` file.
 
 Example: To deploy the contract to the Sepolia network, run the command below:
 
