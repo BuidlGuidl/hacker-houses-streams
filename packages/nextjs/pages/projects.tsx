@@ -1,6 +1,9 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import axios from "axios";
 import { ethers } from "ethers";
+import { DateTime } from "luxon";
 import type { NextPage } from "next";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
@@ -54,6 +57,34 @@ const Projects: NextPage = () => {
 
   const sortedWithdrawEvents = withdrawEvents?.sort((a: any, b: any) => b.block.number - a.block.number);
 
+  type LastUpdateType = {
+    [key: string]: string;
+  };
+
+  const [projectsLastUpdate, setProjectsLastUpdate] = useState<LastUpdateType>({});
+
+  const githubApoUri = "https://api.github.com/repos";
+
+  useEffect(() => {
+    const getLastCommits = async () => {
+      const projectsUpdate: LastUpdateType = {};
+      for (let i = 0; i < projects.length; i++) {
+        const github: string = projects[i].github;
+        const owner: string = github.split("/")[3];
+        const name: string = github.split("/")[4];
+        const apiUrl = `${githubApoUri}/${owner}/${name}`;
+        try {
+          const result = await axios.get(apiUrl);
+          projectsUpdate[github] = result.data.pushed_at;
+        } catch (e) {
+          console.error("Error getting repository data: ", apiUrl, e);
+        }
+      }
+      setProjectsLastUpdate(projectsUpdate);
+    };
+    getLastCommits();
+  }, []);
+
   return (
     <>
       <div className="max-w-3xl px-4 py-8">
@@ -62,7 +93,14 @@ const Projects: NextPage = () => {
           {projects.map(project => {
             return (
               <div className="mb-8" key={project.name}>
-                <h2 className="font-bold text-secondary mb-1">{project.name}</h2>
+                <h2 className="font-bold text-secondary mb-1">
+                  {project.name}
+                  {projectsLastUpdate[project.github] && (
+                    <small className="ml-2">
+                      (Updated {DateTime.fromISO(projectsLastUpdate[project.github]).toRelative()})
+                    </small>
+                  )}
+                </h2>
 
                 <p className="mt-2 mb-0">{project.description}</p>
                 <div className="flex gap-2">
