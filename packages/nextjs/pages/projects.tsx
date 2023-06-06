@@ -63,7 +63,7 @@ const Projects: NextPage = () => {
 
   const [projectsLastUpdate, setProjectsLastUpdate] = useState<LastUpdateType>({});
 
-  const githubApoUri = "https://api.github.com/repos";
+  const githubApiUri = "https://api.github.com/repos";
 
   useEffect(() => {
     const getLastCommits = async () => {
@@ -72,7 +72,7 @@ const Projects: NextPage = () => {
         const github: string = projects[i].github;
         const owner: string = github.split("/")[3];
         const name: string = github.split("/")[4];
-        const apiUrl = `${githubApoUri}/${owner}/${name}`;
+        const apiUrl = `${githubApiUri}/${owner}/${name}`;
         try {
           const result = await axios.get(apiUrl);
           projectsUpdate[github] = result.data.pushed_at;
