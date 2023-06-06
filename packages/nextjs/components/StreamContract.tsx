@@ -68,7 +68,7 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
               />
               <EtherInput value={amount} onChange={value => setAmount(value)} />
               <button className="btn btn-primary btn-sm" onClick={doWithdraw}>
-                Confirm Withdrawl
+                Confirm Withdrawal
               </button>
             </div>
           </div>
