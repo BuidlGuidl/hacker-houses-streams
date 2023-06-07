@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import axios from "axios";
 import { ethers } from "ethers";
 import { DateTime } from "luxon";
 import type { NextPage } from "next";
@@ -47,6 +46,8 @@ const projects = [
   },
 ];
 
+const githubApiUri = "https://api.github.com/repos";
+
 const Projects: NextPage = () => {
   const { data: withdrawEvents, isLoading: isLoadingWithdrawEvents } = useScaffoldEventHistory({
     contractName: "YourContract",
@@ -63,8 +64,6 @@ const Projects: NextPage = () => {
 
   const [projectsLastUpdate, setProjectsLastUpdate] = useState<LastUpdateType>({});
 
-  const githubApiUri = "https://api.github.com/repos";
-
   useEffect(() => {
     const getLastCommits = async () => {
       const projectsUpdate: LastUpdateType = {};
@@ -74,8 +73,9 @@ const Projects: NextPage = () => {
         const name: string = github.split("/")[4];
         const apiUrl = `${githubApiUri}/${owner}/${name}`;
         try {
-          const result = await axios.get(apiUrl);
-          projectsUpdate[github] = result.data.pushed_at;
+          const result = await fetch(apiUrl);
+          const data = await result.json();
+          projectsUpdate[github] = data.pushed_at;
         } catch (e) {
           console.error("Error getting repository data: ", apiUrl, e);
         }
@@ -96,8 +96,8 @@ const Projects: NextPage = () => {
                 <h2 className="font-bold text-secondary mb-1">
                   {project.name}
                   {projectsLastUpdate[project.github] && (
-                    <small className="ml-2">
-                      (Updated {DateTime.fromISO(projectsLastUpdate[project.github]).toRelative()})
+                    <small className="ml-2 text-gray-500">
+                      - Updated {DateTime.fromISO(projectsLastUpdate[project.github]).toRelative()}
                     </small>
                   )}
                 </h2>
