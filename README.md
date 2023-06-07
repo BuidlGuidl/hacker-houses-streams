@@ -118,7 +118,7 @@ yarn install
 
 ### 3. Configure website
 
-- Adapt generic template copys & metadata on `packages/nextjs/pages/index.tsx`.
+- Adapt generic template copy & metadata on `packages/nextjs/pages/index.tsx`.
 - Customize Look and Feel for each component. We are using Tailwind and daisyUI.
   - `packages/nextjs/tailwind.config.js` (You can play with the colors here)
 
