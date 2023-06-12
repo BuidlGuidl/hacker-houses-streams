@@ -5,8 +5,6 @@ UBI to handpicked open-source developers, rewarding them for their ongoing contr
 
 Developers can submit their contributions (stored in a Smart Contract), automatically claim grant streams, and showcase their work to the public.
 
-![Placeholder image from Hacker-Houses-Streams](https://user-images.githubusercontent.com/55535804/241392637-f9719113-165e-481a-a0a5-6bf4b343ce1a.png)
-
 **Stream mechanism:**
 
 - Each developer has a stream with a monthly cap
@@ -19,17 +17,37 @@ Developers can submit their contributions (stored in a Smart Contract), automati
 We provide a contract that includes basic features for your Hacker House Stream.
 
 - **Donations to the Hacker House**. Anyone can show their support to the Hacker House by sending ETH to the contract.
+
+![Contract balance](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/d6d6d1b7-83b7-4838-9995-c66a725d3e01)
+
 - **List of developers and their monthly stream cap**.
+
+![Hackers streams](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/880fec46-88af-43d6-83af-c57725d22a35)
+
 - **Withdrawals**. Each builder can do withdrawals from their available streams when they contribute.
+
+![Withdrawal modal](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/676e3cba-78ad-4cc6-9461-43d006773a01)
+
 - **Rechargable streams**. After a withdrawal, the hacker's monthly stream gets recharged during the next 30 days, until reaching their cap (MAX monthly stream).
+
+![Stream recharging](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/2e4d746e-d39f-48ba-ab52-eae49677cdb6)
 
 ## Hacker House Website
 
 You get a generic template to set your Hacker House Website. Feel free to add all the visual and copy changes to adapt it to your Hacker House. The template it's a one-page with:
 
 - **Hacker House welcome**
-- **List of hackers and their streams** (currentley available and monthly cap)
+
+![Welcome section](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/8fd70b6e-8074-4db9-8625-0e7b1b19baff)
+
+- **List of hackers and their streams** (currently available and monthly cap)
 - **List of contributions** (text submitted by developers for each withdrawal). In that text they can share links to their work (PR, Repo, design..)
+  -  **Full Hacker House contributions**
+
+    ![Hacker House contributions](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/6e1c5b45-365b-4d4d-862f-be39c5319a14)
+  -  **Individual contribution detail**
+
+    ![Individual Contributions](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/9098679e-6ace-4226-918f-97156d89605b)
 
 Here you can view some examples of active Hacker Houses using this project:
 
