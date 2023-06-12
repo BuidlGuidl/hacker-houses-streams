@@ -18,19 +18,19 @@ We provide a contract that includes basic features for your Hacker House Stream.
 
 - **Donations to the Hacker House**. Anyone can show their support to the Hacker House by sending ETH to the contract.
 
-![Contract balance](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/d6d6d1b7-83b7-4838-9995-c66a725d3e01)
+![Contract balance](.github/img/stream-contract-balance.png)
 
 - **List of developers and their monthly stream cap**.
 
-![Hackers streams](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/880fec46-88af-43d6-83af-c57725d22a35)
+![Hackers streams](.github/img/hacker-streams.png)
 
 - **Withdrawals**. Each builder can do withdrawals from their available streams when they contribute.
 
-![Withdrawal modal](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/676e3cba-78ad-4cc6-9461-43d006773a01)
+![Withdrawal modal](.github/img/builder-withdrawals.png)
 
-- **Rechargable streams**. After a withdrawal, the hacker's monthly stream gets recharged during the next 30 days, until reaching their cap (MAX monthly stream).
+- **Rechargeable streams**. After a withdrawal, the hacker's monthly stream gets recharged during the next 30 days, until reaching their cap (MAX monthly stream).
 
-![Stream recharging](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/2e4d746e-d39f-48ba-ab52-eae49677cdb6)
+![Stream recharging](.github/img/rechargeable-streams.png)
 
 ## Hacker House Website
 
@@ -38,16 +38,18 @@ You get a generic template to set your Hacker House Website. Feel free to add al
 
 - **Hacker House welcome**
 
-![Welcome section](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/8fd70b6e-8074-4db9-8625-0e7b1b19baff)
+![Welcome section](.github/img/welcome-section.png)
 
 - **List of hackers and their streams** (currently available and monthly cap)
 - **List of contributions** (text submitted by developers for each withdrawal). In that text they can share links to their work (PR, Repo, design..)
-  -  **Full Hacker House contributions**
 
-    ![Hacker House contributions](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/6e1c5b45-365b-4d4d-862f-be39c5319a14)
-  -  **Individual contribution detail**
+  - **Full Hacker House contributions**
 
-    ![Individual Contributions](https://github.com/Pabl0cks/hacker-houses-streams/assets/55535804/9098679e-6ace-4226-918f-97156d89605b)
+  ![Hacker House contributions](.github/img/full-contributions-section.png)
+
+  - **Individual contribution detail**
+
+  ![Individual Contributions](.github/img/individual-contributions.png)
 
 Here you can view some examples of active Hacker Houses using this project:
 
@@ -62,9 +64,9 @@ You'll need to complete a few steps to have your Hacker House running:
 
 - [0. Checking prerequisites](#0-checking-prerequisites)
 - [1. Clone/Fork this repo & install dependencies](#1-clonefork-this-repo--install-dependencies)
-- [2. Configure on-chain data for your Hacker House Stream](#2-configure-on-chain-data-for-your-hacker-house-stream)
+- [2. Configure contract data for your Hacker House Streams](#2-configure-contract-data-for-your-hacker-house-streams)
 - [3. Configure website](#3-configure-website)
-- [4. Test your local environment](#4-test-your-local-environment)
+- [4. Testing locally](#4-testing-locally)
 - [5. Deploy to a Live Network](#5-deploy-to-a-live-network)
   - [5.1 Deploy your Smart Contracts](#51-deploy-your-smart-contracts)
   - [5.2 Deploy your NextJS App](#52-deploy-your-nextjs-app)
