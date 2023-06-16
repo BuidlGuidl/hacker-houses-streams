@@ -198,7 +198,7 @@ If you want to redeploy to the same production URL you can run `yarn vercel --pr
 
 **Make sure your `packages/nextjs/scaffold.config.ts` file has the values you need.**
 
-**Hint**: We recommend connecting the project GitHub repo to Vercel so you the gets automatically deployed when pushing to `main`
+**Hint**: We recommend connecting the project GitHub repo to Vercel so that it gets automatically deployed when pushing to `main`
 
 #### 5.3 Disabling type and linting error checks
 
@@ -207,7 +207,7 @@ If you want to redeploy to the same production URL you can run `yarn vercel --pr
 
 ##### Disabling commit checks
 
-We run `pre-commit` [git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) which lints the staged files and don't let you commit if there is an linting error.
+We run `pre-commit` [git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) which lints the staged files and doesn't let you commit if there is a linting error.
 
 To disable this, go to `.husky/pre-commit` file and comment out `yarn lint-staged --verbose`
 
