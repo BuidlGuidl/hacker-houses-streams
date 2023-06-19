@@ -13,6 +13,7 @@ type HackerStreamsProps = {
   withdrawEvents: any[] | undefined;
   isLoadingBuilderData: boolean;
   isLoadingBuilderEvents: boolean;
+  isOwner: boolean;
 };
 
 export const HackerStreams = ({
@@ -20,9 +21,11 @@ export const HackerStreams = ({
   withdrawEvents,
   isLoadingBuilderData,
   isLoadingBuilderEvents,
+  isOwner,
 }: HackerStreamsProps) => {
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
   const [selectedAddress, setSelectedAddress] = useState("");
+
   return (
     <div className="p-10">
       {isLoadingBuilderData || isLoadingBuilderEvents ? (
@@ -106,6 +109,21 @@ export const HackerStreams = ({
                   </div>
                   <progress className="progress w-56 progress-primary bg-white" value={percentage} max="100"></progress>
                 </div>
+
+                {isOwner ? (
+                  <div>
+                    {/* <button
+                      className="btn btn-sm"
+                      onClick={() => {
+                        alert("how tf to i dynamically delete " + builderData.builderAddress);
+                      }}
+                    >
+                      delete
+                    </button> */}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             );
           })}

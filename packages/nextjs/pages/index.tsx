@@ -19,6 +19,11 @@ const Home: NextPage = () => {
 
   const [builderList, setBuilderList] = useState<string[]>([]);
 
+  const { data: owner } = useScaffoldContractRead({
+    contractName: "YourContract",
+    functionName: "owner",
+  });
+
   const { data: allBuildersData, isLoading: isLoadingBuilderData } = useScaffoldContractRead({
     contractName: "YourContract",
     functionName: "allBuildersData",
@@ -50,6 +55,8 @@ const Home: NextPage = () => {
   const amIAStreamedBuilder = allBuildersData?.some(
     (builderData: BuilderData) => builderData.builderAddress === address,
   );
+
+  const isOwner = address === owner;
 
   return (
     <>
@@ -87,12 +94,13 @@ const Home: NextPage = () => {
           withdrawEvents={withdrawEvents}
           isLoadingBuilderData={isLoadingBuilderData}
           isLoadingBuilderEvents={isLoadingBuilderEvents}
+          isOwner={isOwner}
         />
 
         <h2 className="mt-16 mb-4 font-bold text-xl border-b-4 border-primary px-2 text-center">Contributions</h2>
         <Contributions withdrawEvents={withdrawEvents} isLoadingWithdrawEvents={isLoadingWithdrawEvents} />
 
-        <StreamContract amIAStreamedBuilder={amIAStreamedBuilder} />
+        <StreamContract amIAStreamedBuilder={amIAStreamedBuilder} owner={owner} isOwner={isOwner} />
       </div>
     </>
   );

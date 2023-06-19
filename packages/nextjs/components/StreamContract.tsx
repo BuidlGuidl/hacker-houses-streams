@@ -1,29 +1,71 @@
 import { useState } from "react";
 import { ethers } from "ethers";
+import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
-import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { Address, AddressInput, Balance, EtherInput } from "~~/components/scaffold-eth";
+import { useDeployedContractInfo, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 type StreamContractProps = {
   amIAStreamedBuilder?: boolean;
+  owner?: string;
+  isOwner?: boolean;
 };
 
-export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => {
+export const StreamContract = ({ amIAStreamedBuilder, owner }: StreamContractProps) => {
   const [reason, setReason] = useState("");
   const [amount, setAmount] = useState("");
 
-  const { data: streamContract } = useDeployedContractInfo("YourContract");
+  const { address } = useAccount();
 
-  const { data: owner } = useScaffoldContractRead({
-    contractName: "YourContract",
-    functionName: "owner",
-  });
+  const { data: streamContract } = useDeployedContractInfo("YourContract");
 
   const { writeAsync: doWithdraw } = useScaffoldContractWrite({
     contractName: "YourContract",
     functionName: "streamWithdraw",
     args: [ethers.utils.parseEther(amount || "0"), reason],
   });
+
+  let ownerDisplay;
+
+  const [addBuilderStreamAmount, setAddBuilderStreamAmount] = useState("");
+  const [addBuilderStreamAddress, setAddBuilderStreamAddress] = useState("");
+
+  const { writeAsync: addBuilderStream } = useScaffoldContractWrite({
+    contractName: "YourContract",
+    functionName: "addBuilderStream",
+    args: [addBuilderStreamAddress, ethers.utils.parseEther(addBuilderStreamAmount || "0")],
+  });
+
+  const [updateBuilderStreamAmount, setUpdateBuilderStreamAmount] = useState("");
+  const [updateBuilderStreamAddress, setUpdateBuilderStreamAddress] = useState("");
+
+  const { writeAsync: updateBuilderStream } = useScaffoldContractWrite({
+    contractName: "YourContract",
+    functionName: "updateBuilderStreamCap",
+    args: [updateBuilderStreamAddress, ethers.utils.parseEther(updateBuilderStreamAmount || "0")],
+  });
+
+  if (address == owner) {
+    ownerDisplay = (
+      <div>
+        <div className="p-5">
+          <AddressInput value={addBuilderStreamAddress} onChange={setAddBuilderStreamAddress} />
+          <EtherInput value={addBuilderStreamAmount} onChange={setAddBuilderStreamAmount} />
+          <button className="btn btn-secondary" onClick={addBuilderStream}>
+            Add Stream
+          </button>
+        </div>
+
+        <div className="p-5">
+          <AddressInput value={updateBuilderStreamAddress} onChange={setUpdateBuilderStreamAddress} />
+          <EtherInput value={updateBuilderStreamAmount} onChange={setUpdateBuilderStreamAmount} />
+          <button className="btn btn-secondary" onClick={updateBuilderStream}>
+            Update Stream
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -47,6 +89,7 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
       <div className="my-6 flex flex-col items-center">
         <p className="font-bold mb-2 bg-secondary text-secondary-content px-1">Owner</p>
         <Address address={owner} />
+        {ownerDisplay}
       </div>
 
       <input type="checkbox" id="withdraw-modal" className="modal-toggle" />
