@@ -8,7 +8,7 @@ module.exports = {
     themes: [
       {
         scaffoldEth: {
-          primary: "#60448f",
+          primary: "#9EC74D",
           "primary-content": "#ffffff",
           secondary: "#232323",
           "secondary-content": "#ffffff",
@@ -65,7 +65,7 @@ module.exports = {
     // Extend Tailwind classes (e.g. font-bai-jamjuree, animate-grow)
     extend: {
       fontFamily: {
-        "bai-jamjuree": ["Bai Jamjuree", "sans-serif"],
+        "Grotesk": ["Space Grotesk", "sans-serif"],
       },
       keyframes: {
         grow: {
