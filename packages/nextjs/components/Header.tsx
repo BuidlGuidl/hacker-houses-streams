@@ -7,7 +7,7 @@ import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaff
  */
 export const Header = () => {
   return (
-    <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 p-4">
+    <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 p-4 font-Grotesk">
       <div className="flex-col items-start">
         <p className="m-0 text-xl md:text-3xl font-bold !leading-7">
           <Link href="/">Your Hacker House</Link>
