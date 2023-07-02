@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -10,7 +12,6 @@ h1,
 h2,
 h3,
 h4 {
-  margin-bottom: 0.5rem;
   line-height: 1;
 }
 
