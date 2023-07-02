@@ -68,9 +68,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex items-center flex-col flex-grow pt-10 mb-20">
-        <p className="font-bold text-center text-3xl leading-6 border-b-4 border-primary p-2">Welcome!</p>
-        <div className="max-w-[40rem] m-auto w-[90%]">
+      <div className="flex items-center flex-col flex-grow pt-10 mb-20 w-[90%] mx-auto font-Grotesk">
+        <div className="max-w-[42rem] m-auto w-[90%] bg-white px-8 py-4 rounded-2xl mb-10">
+          <p className="font-bold text-left text-4xl leading-6 py-2">Welcome!</p>
           <p>
             This forkable project aims to provide a platform to retroactively fund open-source work by providing a
             monthly UBI to handpicked open-source developers, rewarding them for their ongoing contributions.
@@ -81,18 +81,28 @@ const Home: NextPage = () => {
           </p>
         </div>
 
-        <h2 className="mt-16 mb-4 font-bold text-xl border-b-4 border-primary px-2 text-center">Hacker ETH Streams</h2>
-        <HackerStreams
-          allBuildersData={allBuildersData}
-          withdrawEvents={withdrawEvents}
-          isLoadingBuilderData={isLoadingBuilderData}
-          isLoadingBuilderEvents={isLoadingBuilderEvents}
-        />
+        <div className="max-w-[42rem] m-auto w-[90%] bg-white rounded-2xl mb-10">
+          <h2 className="font-bold text-2xl px-8 py-4 border-b-2">Hacker ETH Streams</h2>
+          <div>
+            <HackerStreams
+              allBuildersData={allBuildersData}
+              withdrawEvents={withdrawEvents}
+              isLoadingBuilderData={isLoadingBuilderData}
+              isLoadingBuilderEvents={isLoadingBuilderEvents}
+            />
+          </div>
+          <h2 className="font-bold text-2xl px-8 py-4 border-b-2 bg-slate-50">Contract Details</h2>
+          <div className="p-0 bg-slate-50">
+            <StreamContract amIAStreamedBuilder={amIAStreamedBuilder} />
+          </div>
+        </div>
 
-        <h2 className="mt-16 mb-4 font-bold text-xl border-b-4 border-primary px-2 text-center">Contributions</h2>
-        <Contributions withdrawEvents={withdrawEvents} isLoadingWithdrawEvents={isLoadingWithdrawEvents} />
-
-        <StreamContract amIAStreamedBuilder={amIAStreamedBuilder} />
+        <div className="max-w-[42rem] m-auto w-[90%] bg-white rounded-2xl mb-10">
+          <h2 className="font-bold text-2xl px-8 py-4 border-b-2">Contributions</h2>
+          <div className="p-0">
+            <Contributions withdrawEvents={withdrawEvents} isLoadingWithdrawEvents={isLoadingWithdrawEvents} />
+          </div>
+        </div>
       </div>
     </>
   );
