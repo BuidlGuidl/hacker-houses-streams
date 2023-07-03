@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           </p>
         </div>
         <div className="mb-10">
-          <StreamContractInfo />
+          <StreamContractInfo showWithdrawButton={false} />
         </div>
       </div>
     </>
