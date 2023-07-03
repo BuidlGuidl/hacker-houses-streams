@@ -5,7 +5,7 @@ import { BanknotesIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outli
 import { Address, Balance } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
-export const StreamContractInfo = () => {
+export const StreamContractInfo = ({ showWithdrawButton = true }) => {
   const { address } = useAccount();
   const { data: streamContract } = useDeployedContractInfo("YourContract");
 
@@ -44,7 +44,7 @@ export const StreamContractInfo = () => {
           /
           <Balance address={streamContract?.address} className="text-3xl" />
         </div>
-        {address && amIAStreamdBuilder && (
+        {showWithdrawButton && address && amIAStreamdBuilder && (
           <div className="mt-3">
             <label
               htmlFor="withdraw-modal"
