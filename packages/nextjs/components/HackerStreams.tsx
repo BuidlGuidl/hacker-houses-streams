@@ -100,7 +100,7 @@ export const HackerStreams = ({
                   </label>
                 </div>
 
-                <div className="w-[60%] flex flex-col md:items-center px-4 font-medium">
+                <div className="md:w-[60%] sm:w-[90%] flex flex-col md:items-center px-4 font-medium">
                   <div>
                     Ξ {parseFloat(unlocked).toFixed(4)} / {cap}
                   </div>

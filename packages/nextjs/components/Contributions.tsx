@@ -32,21 +32,22 @@ export const Contributions = ({ withdrawEvents, isLoadingWithdrawEvents }: Contr
   }, [withdrawEvents]);
 
   return (
-    <div className="m-auto w-[100%] max-w-[42rem] px-2">
+    <div className="m-auto w-[100%] max-w-[42rem]">
       {isLoadingWithdrawEvents ? (
         <div className="my-10 text-center">
           <div className="text-5xl animate-bounce mb-2">👾</div>
           <div className="text-lg loading-dots">Loading...</div>
         </div>
       ) : sortedWithdrawEvents && sortedWithdrawEvents.length > 0 ? (
-        sortedWithdrawEvents.map((event: ContributionEvent) => {
+        sortedWithdrawEvents.map((event: ContributionEvent, index: number) => {
+          const isLastElement = index === sortedWithdrawEvents.length - 1;
           return (
             <div
-              className="flex flex-col gap-1 border-b-2 p-6"
+              className={`flex flex-col gap-1 p-6 ${!isLastElement ? "border-b-2" : ""}`}
               key={`${event.log.address}_${event.log.blockNumber}`}
               data-test={`${event.log.address}_${event.log.blockNumber}`}
             >
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row justify-between px-2">
                 <div className="w-1/3">
                   <div>
                     <Address address={event.args.to} />
