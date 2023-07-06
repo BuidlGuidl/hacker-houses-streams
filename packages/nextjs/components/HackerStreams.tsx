@@ -24,9 +24,9 @@ export const HackerStreams = ({
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
   const [selectedAddress, setSelectedAddress] = useState("");
   return (
-    <div className="p-10">
+    <div>
       {isLoadingBuilderData || isLoadingBuilderEvents ? (
-        <div className="my-10 text-center">
+        <div className="my-10 text-center p-10">
           <div className="text-5xl animate-bounce mb-2">👾</div>
           <div className="text-lg loading-dots">Loading...</div>
         </div>
@@ -42,10 +42,10 @@ export const HackerStreams = ({
 
             return (
               <div
-                className="pb-8 gap-2 md:items-end flex flex-col md:flex-row md:gap-6"
+                className="p-4 gap-2 md:items-end flex flex-col md:flex-row md:gap-6 border-b-2"
                 key={builderData.builderAddress}
               >
-                <div className="md:w-1/2 flex">
+                <div className="w-[40%] flex px-4">
                   <label
                     htmlFor={uniqueModalId}
                     className="cursor-pointer"
@@ -100,11 +100,15 @@ export const HackerStreams = ({
                   </label>
                 </div>
 
-                <div className="flex flex-col md:items-center">
+                <div className="md:w-[60%] sm:w-[90%] flex flex-col md:items-center px-4 font-medium">
                   <div>
                     Ξ {parseFloat(unlocked).toFixed(4)} / {cap}
                   </div>
-                  <progress className="progress w-56 progress-primary bg-white" value={percentage} max="100"></progress>
+                  <progress
+                    className="progress w-full progress-primary bg-white h-3"
+                    value={percentage}
+                    max="100"
+                  ></progress>
                 </div>
               </div>
             );
