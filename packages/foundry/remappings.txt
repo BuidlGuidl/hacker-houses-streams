@@ -1,0 +1,2 @@
+solmate/=lib/solmate/src/
+solady/=lib/solady/src/
