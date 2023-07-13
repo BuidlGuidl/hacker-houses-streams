@@ -58,14 +58,14 @@ module.exports = {
             "--tooltip-color": "hsl(var(--p))",
           },
         },
-      }
+      },
     ],
   },
   theme: {
     // Extend Tailwind classes (e.g. font-bai-jamjuree, animate-grow)
     extend: {
       fontFamily: {
-        "Grotesk": ["Space Grotesk", "sans-serif"],
+        grotesk: ["Space Grotesk", "sans-serif"],
       },
       keyframes: {
         grow: {
