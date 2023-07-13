@@ -27,26 +27,28 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
 
   return (
     <>
-      <div className="my-6 flex flex-col items-center">
-        <p className="font-bold mb-2 bg-secondary text-secondary-content px-1">Stream contract Balance</p>
-        <Address address={streamContract?.address} />
-        <Balance address={streamContract?.address} className="text-3xl" />
-        {amIAStreamedBuilder && (
-          <div className="mt-6">
-            <label
-              htmlFor="withdraw-modal"
-              className="btn btn-primary btn-sm px-2 rounded-full font-normal space-x-2 normal-case"
-            >
-              <BanknotesIcon className="h-4 w-4" />
-              <span>Withdraw</span>
-            </label>
-          </div>
-        )}
-      </div>
+      <div className="flex flex-col sm:flex-row justify-between px-8 text-xl pb-8">
+        <div className="flex flex-col items-start">
+          <p className="font-bold mb-2 px-1">Balance</p>
+          <Balance address={streamContract?.address} className="text-3xl bg-neutral h-14 p-6 rounded-md mb-6" />
+          <Address address={streamContract?.address} />
+          {amIAStreamedBuilder && (
+            <div className="mt-6">
+              <label
+                htmlFor="withdraw-modal"
+                className="btn btn-primary btn-sm px-4 rounded-full font-normal space-x-2 normal-case"
+              >
+                <BanknotesIcon className="h-5 w-5" />
+                <span className="text-base">Withdraw</span>
+              </label>
+            </div>
+          )}
+        </div>
 
-      <div className="my-6 flex flex-col items-center">
-        <p className="font-bold mb-2 bg-secondary text-secondary-content px-1">Owner</p>
-        <Address address={owner} />
+        <div className="flex flex-col items-start md:px-12 mt-6 sm:mt-0 sm:pb-8">
+          <p className="font-bold mb-2 px-1">Owner</p>
+          <Address address={owner} />
+        </div>
       </div>
 
       <input type="checkbox" id="withdraw-modal" className="modal-toggle" />

@@ -8,13 +8,13 @@ module.exports = {
     themes: [
       {
         scaffoldEth: {
-          primary: "#60448f",
+          primary: "#9EC74D",
           "primary-content": "#ffffff",
-          secondary: "#232323",
+          secondary: "#FFFFFF",
           "secondary-content": "#ffffff",
-          accent: "#93BBFB",
+          accent: "#f8fafc",
           "accent-content": "#212638",
-          neutral: "#212638",
+          neutral: "#e5e7eb",
           "neutral-content": "#ffffff",
           "base-100": "#f3f3f3",
           "base-200": "#F9FBFF",
@@ -36,11 +36,11 @@ module.exports = {
         scaffoldEthDark: {
           primary: "#212638",
           "primary-content": "#F9FBFF",
-          secondary: "#2A3655",
+          secondary: "#4969A6",
           "secondary-content": "#F9FBFF",
-          accent: "#4969A6",
+          accent: "#2A3655",
           "accent-content": "#F9FBFF",
-          neutral: "#F9FBFF",
+          neutral: "#212638",
           "neutral-content": "#385183",
           "base-100": "#385183",
           "base-200": "#2A3655",
@@ -58,33 +58,14 @@ module.exports = {
             "--tooltip-color": "hsl(var(--p))",
           },
         },
-      }
+      },
     ],
   },
   theme: {
     // Extend Tailwind classes (e.g. font-bai-jamjuree, animate-grow)
     extend: {
       fontFamily: {
-        "bai-jamjuree": ["Bai Jamjuree", "sans-serif"],
-      },
-      keyframes: {
-        grow: {
-          "0%": {
-            width: "0%",
-          },
-          "100%": {
-            width: "100%",
-          },
-        },
-        zoom: {
-          "0%, 100%": { transform: "scale(1, 1)" },
-          "50%": { transform: "scale(1.1, 1.1)" },
-        },
-      },
-      animation: {
-        grow: "grow 5s linear infinite",
-        "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        zoom: "zoom 1s ease infinite",
+        grotesk: ["Space Grotesk", "sans-serif"],
       },
     },
   },
