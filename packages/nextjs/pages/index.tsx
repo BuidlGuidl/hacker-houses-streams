@@ -68,9 +68,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex items-center flex-col flex-grow pt-10 mb-20 w-[90%] mx-auto font-grotesk">
+      <div className="flex items-center flex-col flex-grow pt-10 mb-20 mx-auto font-grotesk gap-5">
         <h1 className="font-bold text-4xl pb-8 visible md:hidden">Your Hacker House</h1>
-        <div className="max-w-[42rem] m-auto w-[90%] bg-secondary px-8 py-4 rounded-2xl mb-10">
+        <div className="max-w-[42rem] m-auto w-[90%] bg-secondary px-8 py-4 rounded-2xl">
           <p className="font-bold text-left text-4xl leading-6 py-2">Welcome!</p>
           <p>
             This forkable project aims to provide a platform to retroactively fund open-source work by providing a
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
           </p>
         </div>
 
-        <div className="max-w-[42rem] m-auto w-[90%] bg-secondary rounded-2xl mb-10">
+        <div className="max-w-[42rem] m-auto w-[90%] bg-secondary rounded-2xl">
           <h2 className="font-bold text-2xl px-8 py-4 border-b-2">Hacker ETH Streams</h2>
           <div>
             <HackerStreams
@@ -98,7 +98,7 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <div className="max-w-[42rem] m-auto w-[90%] bg-secondary rounded-2xl mb-10">
+        <div className="max-w-[42rem] m-auto w-[90%] bg-secondary rounded-2xl">
           <h2 className="font-bold text-2xl px-8 py-4 border-b-2">Contributions</h2>
           <div className="p-0">
             <Contributions withdrawEvents={withdrawEvents} isLoadingWithdrawEvents={isLoadingWithdrawEvents} />
