@@ -1,6 +1,6 @@
 # Hacker Houses Streams
 
-This **forkable** project aims to provide a platform to retroactively fund open-source work by providing a monthly
+This **forkable** project -[Steps to set your own Hacker House](#steps-to-set-your-own-hacker-house)- aims to provide a platform to retroactively fund open-source work by providing a monthly
 UBI to handpicked open-source developers, rewarding them for their ongoing contributions.
 
 Developers can submit their contributions (stored in a Smart Contract), automatically claim grant streams, and showcase their work to the public.
