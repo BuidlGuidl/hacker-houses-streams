@@ -2,7 +2,13 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import {
+  useDeployedContractInfo,
+  useNetworkColor,
+  useScaffoldContractRead,
+  useScaffoldContractWrite,
+} from "~~/hooks/scaffold-eth";
+import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 type StreamContractProps = {
   amIAStreamedBuilder?: boolean;
@@ -11,6 +17,9 @@ type StreamContractProps = {
 export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => {
   const [reason, setReason] = useState("");
   const [amount, setAmount] = useState("");
+
+  const networkColor = useNetworkColor();
+  const configuredNetwork = getTargetNetwork();
 
   const { data: streamContract } = useDeployedContractInfo("YourContract");
 
@@ -31,7 +40,12 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
         <div className="flex flex-col items-start">
           <p className="font-bold mb-2 px-1">Balance</p>
           <Balance address={streamContract?.address} className="text-3xl bg-neutral h-14 p-6 rounded-md mb-6" />
-          <Address address={streamContract?.address} />
+          <div className="flex flex-col items-center">
+            <Address address={streamContract?.address} />
+            <span className="text-sm" style={{ color: networkColor }}>
+              {configuredNetwork.name}
+            </span>
+          </div>
           {amIAStreamedBuilder && (
             <div className="mt-6">
               <label
