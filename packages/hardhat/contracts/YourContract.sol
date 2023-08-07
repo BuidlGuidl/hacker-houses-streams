@@ -39,9 +39,7 @@ contract YourContract is Ownable {
 
     function unlockedBuilderAmount(address _builder) public view returns (uint256) {
         BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
-        if (builderStream.cap == 0) {
-            return 0;
-        }
+        require(builderStream.cap > 0, "No active stream for builder");
 
         if (block.timestamp - builderStream.last > frequency) {
             return builderStream.cap;
