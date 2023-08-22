@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
-import { Address, Balance, EtherInput } from "~~/components/scaffold-eth";
+import { Address, InputBase } from "~~/components/scaffold-eth";
 import {
   useDeployedContractInfo,
   useNetworkColor,
@@ -28,6 +28,12 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
     functionName: "owner",
   });
 
+  const { data: streamContractTokenBalance } = useScaffoldContractRead({
+    contractName: "SomeERC20",
+    functionName: "balanceOf",
+    args: [streamContract?.address],
+  });
+
   const { writeAsync: doWithdraw } = useScaffoldContractWrite({
     contractName: "YourContract",
     functionName: "streamWithdraw",
@@ -39,7 +45,10 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
       <div className="flex flex-col sm:flex-row justify-between px-8 text-xl pb-8">
         <div className="flex flex-col items-start">
           <p className="font-bold mb-2 px-1">Balance</p>
-          <Balance address={streamContract?.address} className="text-3xl bg-neutral h-14 p-6 rounded-md mb-6" />
+
+          <div className="text-3xl bg-neutral p-6 rounded-md mb-6">
+            {ethers.utils.formatEther(streamContractTokenBalance || "0")} <span className="text-xs">tokens</span>
+          </div>
           <div className="flex flex-col items-center">
             <Address address={streamContract?.address} />
             <span className="text-sm" style={{ color: networkColor }}>
@@ -82,7 +91,11 @@ export const StreamContract = ({ amIAStreamedBuilder }: StreamContractProps) => 
                 value={reason}
                 onChange={event => setReason(event.target.value)}
               />
-              <EtherInput value={amount} onChange={value => setAmount(value)} />
+              <InputBase
+                value={amount}
+                onChange={value => setAmount(value)}
+                suffix={<div className="mt-1 mr-2 text=xs">tokens</div>}
+              />
               <button className="btn btn-primary btn-sm" onClick={doWithdraw}>
                 Confirm Withdrawal
               </button>

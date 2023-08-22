@@ -18,7 +18,7 @@ export const displayTxResult = (
     try {
       return displayContent.toNumber();
     } catch (e) {
-      return "Ξ" + formatUnits(displayContent, "ether");
+      return "" + formatUnits(displayContent, "ether") + " tokens";
     }
   }
 

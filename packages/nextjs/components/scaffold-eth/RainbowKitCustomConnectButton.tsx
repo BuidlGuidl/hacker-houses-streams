@@ -1,8 +1,9 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useDisconnect, useSwitchNetwork } from "wagmi";
+import { ethers } from "ethers";
+import { useAccount, useDisconnect, useSwitchNetwork } from "wagmi";
 import { ArrowLeftOnRectangleIcon, ArrowsRightLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import { Balance, BlockieAvatar } from "~~/components/scaffold-eth";
-import { useAutoConnect, useNetworkColor } from "~~/hooks/scaffold-eth";
+import { useAutoConnect, useNetworkColor, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
@@ -15,6 +16,13 @@ export const RainbowKitCustomConnectButton = () => {
   const configuredNetwork = getTargetNetwork();
   const { disconnect } = useDisconnect();
   const { switchNetwork } = useSwitchNetwork();
+
+  const { address } = useAccount();
+  const { data: streamContractTokenBalance } = useScaffoldContractRead({
+    contractName: "SomeERC20",
+    functionName: "balanceOf",
+    args: [address],
+  });
 
   return (
     <ConnectButton.Custom>
@@ -65,6 +73,7 @@ export const RainbowKitCustomConnectButton = () => {
               return (
                 <div className="px-2 flex justify-end items-center">
                   <div className="flex justify-center items-center border-1 rounded-lg">
+                    <div>{ethers.utils.formatEther(streamContractTokenBalance || "0")} tokens</div>
                     <div className="flex flex-col items-center mr-1">
                       <Balance address={account.address} className="min-h-0 h-auto" />
                       <span className="text-xs" style={{ color: networkColor }}>

@@ -83,7 +83,7 @@ const Home: NextPage = () => {
         </div>
 
         <div className="max-w-[42rem] m-auto w-[90%] bg-secondary rounded-2xl">
-          <h2 className="font-bold text-2xl px-8 py-4 border-b-2">Hacker ETH Streams</h2>
+          <h2 className="font-bold text-2xl px-8 py-4 border-b-2">Hacker Token Streams</h2>
           <div>
             <HackerStreams
               allBuildersData={allBuildersData}
@@ -92,8 +92,8 @@ const Home: NextPage = () => {
               isLoadingBuilderEvents={isLoadingBuilderEvents}
             />
           </div>
-          <h2 className="font-bold text-2xl px-8 py-4 border-b-2 bg-accent">Contract Details</h2>
-          <div className="p-0 bg-accent rounded-b-2xl">
+          <h2 className="font-bold text-2xl px-8 py-4 border-b-2">Contract Details</h2>
+          <div className="p-0 rounded-b-2xl">
             <StreamContract amIAStreamedBuilder={amIAStreamedBuilder} />
           </div>
         </div>

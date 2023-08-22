@@ -102,7 +102,7 @@ export const HackerStreams = ({
 
                 <div className="md:w-[60%] sm:w-[90%] flex flex-col md:items-center px-4 font-medium">
                   <div>
-                    Ξ {parseFloat(unlocked).toFixed(4)} / {cap}
+                    {parseFloat(unlocked).toFixed(4)} / {cap} tokens
                   </div>
                   <progress
                     className="progress w-full progress-primary bg-white h-3"
