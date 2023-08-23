@@ -5,8 +5,16 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
+// custom errors
+error ETH_TRANSFER_FAILED();
+error INVALID_ARRAY_INPUT();
+error NO_ACTIVE_STREAM();
+error NOT_ENOUGH_FUNDS_IN_CONTRACT();
+error NOT_ENOUGH_FUNDS_IN_STREAM();
 
 contract YourContract is Ownable {
+
+    uint256 public constant frequency = 2592000; // 30 days
 
     struct BuilderStreamInfo {
         uint256 cap;
@@ -14,8 +22,6 @@ contract YourContract is Ownable {
         address optionalTokenAddress;
     }
     mapping(address => BuilderStreamInfo) public streamedBuilders;
-    // ToDo. Change to 30 days
-    uint256 public frequency = 2592000; // 30 days
 
     event Withdraw(address indexed to, uint256 amount, string reason);
     event AddBuilder(address indexed to, uint256 amount);
@@ -29,12 +35,17 @@ contract YourContract is Ownable {
         uint256 unlockedAmount;
     }
 
-    function allBuildersData(address[] memory _builders) public view returns (BuilderData[] memory) {
-        BuilderData[] memory result = new BuilderData[](_builders.length);
-        for (uint256 i = 0; i < _builders.length; i++) {
+    function allBuildersData(address[] calldata _builders) public view returns (BuilderData[] memory) {
+        // cache length
+        uint256 _length = _builders.length;
+        BuilderData[] memory result = new BuilderData[](_length);
+        for (uint256 i = 0; i < _length;) {
             address builderAddress = _builders[i];
-            BuilderStreamInfo storage builderStream = streamedBuilders[builderAddress];
+            BuilderStreamInfo memory builderStream = streamedBuilders[builderAddress];
             result[i] = BuilderData(builderAddress, builderStream.cap, unlockedBuilderAmount(builderAddress));
+            unchecked {
+                ++ i;
+            }
         }
         return result;
     }
@@ -57,37 +68,41 @@ contract YourContract is Ownable {
         emit AddBuilder(_builder, _cap);
     }
 
-    function addBatch(address[] memory _builders, uint256[] memory _caps, address[] memory _optionalTokenAddresses) public onlyOwner {
-        require(_builders.length == _caps.length, "Lengths are not equal");
-        for (uint256 i = 0; i < _builders.length; i++) {
+    function addBatch(address[] calldata _builders, uint256[] calldata _caps, address[] calldata _optionalTokenAddresses) public onlyOwner {
+        // cache length
+        uint256 _length = _builders.length;
+        if (_length != _caps.length) revert INVALID_ARRAY_INPUT();
+        for (uint256 i = 0; i < _length;) {
             addBuilderStream(payable(_builders[i]), _caps[i],_optionalTokenAddresses[i]);
+            unchecked {
+                ++ i;
+            }
         }
     }
 
     function updateBuilderStreamCap(address payable _builder, uint256 _cap) public onlyOwner {
         BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
-        require(builderStream.cap > 0, "No active stream for builder");
+        if (builderStream.cap == 0) revert NO_ACTIVE_STREAM();
+        
         streamedBuilders[_builder].cap = _cap;
         emit UpdateBuilder(_builder, _cap);
     }
 
-    function streamWithdraw(uint256 _amount, string memory _reason) public {
-
+    function streamWithdraw(uint256 _amount, string calldata _reason) public {
         IERC20 token;
         BuilderStreamInfo storage builderStream = streamedBuilders[msg.sender];
         
-        if(builderStream.optionalTokenAddress == address(0)){
-            require(address(this).balance >= _amount, "Not enough funds in the contract");
-        }else{
+        if (builderStream.optionalTokenAddress == address(0)){
+            if (address(this).balance < _amount) revert NOT_ENOUGH_FUNDS_IN_CONTRACT();
+        } else { 
             token = IERC20(builderStream.optionalTokenAddress);
-            require(token.balanceOf(address(this)) >= _amount, "Not enough tokens in the contract");
+            if (token.balanceOf(address(this)) < _amount) revert NOT_ENOUGH_FUNDS_IN_CONTRACT();
         }
         
-        require(builderStream.cap > 0, "No active stream for builder");
-        
+        if (builderStream.cap == 0) revert NO_ACTIVE_STREAM();
 
         uint256 totalAmountCanWithdraw = unlockedBuilderAmount(msg.sender);
-        require(totalAmountCanWithdraw >= _amount,"Not enough in the stream");
+        if(totalAmountCanWithdraw < _amount) revert NOT_ENOUGH_FUNDS_IN_STREAM();
 
         uint256 cappedLast = block.timestamp - frequency;
         if (builderStream.last < cappedLast){
@@ -99,19 +114,15 @@ contract YourContract is Ownable {
         if(builderStream.optionalTokenAddress == address(0)){
 
             (bool sent,) = msg.sender.call{value: _amount}("");
-            require(sent, "Failed to send Ether");
+            if (!sent) revert ETH_TRANSFER_FAILED();
 
-        }else{
-
+        } else {
             token.transfer(msg.sender, _amount);
-            
         }
-        
 
         emit Withdraw(msg.sender, _amount, _reason);
     }
 
     // to support receiving ETH by default
     receive() external payable {}
-    fallback() external payable {}
 }
