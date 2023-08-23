@@ -15,7 +15,7 @@ contract YourContract is Ownable {
     }
     mapping(address => BuilderStreamInfo) public streamedBuilders;
     // ToDo. Change to 30 days
-    uint256 public frequency = 2592000; // 30 days
+    uint256 public immutable FREQUENCY = 2592000; // 30 days
 
     event Withdraw(address indexed to, uint256 amount, string reason);
     event AddBuilder(address indexed to, uint256 amount);
@@ -45,15 +45,15 @@ contract YourContract is Ownable {
             return 0;
         }
 
-        if (block.timestamp - builderStream.last > frequency) {
+        if (block.timestamp - builderStream.last > FREQUENCY) {
             return builderStream.cap;
         }
 
-        return (builderStream.cap * (block.timestamp - builderStream.last)) / frequency;
+        return (builderStream.cap * (block.timestamp - builderStream.last)) / FREQUENCY;
     }
 
     function addBuilderStream(address payable _builder, uint256 _cap, address _optionalTokenAddress) public onlyOwner {
-        streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - frequency, _optionalTokenAddress);
+        streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - FREQUENCY, _optionalTokenAddress);
         emit AddBuilder(_builder, _cap);
     }
 
@@ -89,7 +89,7 @@ contract YourContract is Ownable {
         uint256 totalAmountCanWithdraw = unlockedBuilderAmount(msg.sender);
         require(totalAmountCanWithdraw >= _amount,"Not enough in the stream");
 
-        uint256 cappedLast = block.timestamp - frequency;
+        uint256 cappedLast = block.timestamp - FREQUENCY;
         if (builderStream.last < cappedLast){
             builderStream.last = cappedLast;
         }

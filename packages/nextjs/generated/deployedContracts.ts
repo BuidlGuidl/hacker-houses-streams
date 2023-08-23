@@ -5,7 +5,7 @@ const contracts = {
       chainId: "31337",
       contracts: {
         SomeERC20: {
-          address: "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+          address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
           abi: [
             {
               inputs: [],
@@ -285,7 +285,7 @@ const contracts = {
           ],
         },
         YourContract: {
-          address: "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+          address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
           abi: [
             {
               inputs: [],
@@ -379,6 +379,19 @@ const contracts = {
               type: "fallback",
             },
             {
+              inputs: [],
+              name: "FREQUENCY",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
               inputs: [
                 {
                   internalType: "address[]",
@@ -455,19 +468,6 @@ const contracts = {
                   internalType: "struct YourContract.BuilderData[]",
                   name: "",
                   type: "tuple[]",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "frequency",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
                 },
               ],
               stateMutability: "view",
