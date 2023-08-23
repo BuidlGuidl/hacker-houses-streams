@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
 // custom errors
-error ETH_TRANSFER_FAILED();
+error TRANSFER_FAILED();
 error INVALID_ARRAY_INPUT();
 error NO_ACTIVE_STREAM();
 error NOT_ENOUGH_FUNDS_IN_CONTRACT();
@@ -114,10 +114,11 @@ contract YourContract is Ownable {
         if(builderStream.optionalTokenAddress == address(0)){
 
             (bool sent,) = msg.sender.call{value: _amount}("");
-            if (!sent) revert ETH_TRANSFER_FAILED();
+            if (!sent) revert TRANSFER_FAILED();
 
         } else {
-            token.transfer(msg.sender, _amount);
+            bool success = token.transfer(msg.sender, _amount);
+            if (!success) revert TRANSFER_FAILED();
         }
 
         emit Withdraw(msg.sender, _amount, _reason);
