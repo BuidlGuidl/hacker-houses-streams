@@ -13,15 +13,14 @@ error NOT_ENOUGH_FUNDS_IN_CONTRACT();
 error NOT_ENOUGH_FUNDS_IN_STREAM();
 
 contract YourContract is Ownable {
-
-    uint256 public constant frequency = 2592000; // 30 days
-
     struct BuilderStreamInfo {
         uint256 cap;
         uint256 last;
         address optionalTokenAddress;
     }
     mapping(address => BuilderStreamInfo) public streamedBuilders;
+    // ToDo. Change to 30 days
+    uint256 public constant FREQUENCY = 2592000; // 30 days
 
     event Withdraw(address indexed to, uint256 amount, string reason);
     event AddBuilder(address indexed to, uint256 amount);
@@ -56,15 +55,15 @@ contract YourContract is Ownable {
             return 0;
         }
 
-        if (block.timestamp - builderStream.last > frequency) {
+        if (block.timestamp - builderStream.last > FREQUENCY) {
             return builderStream.cap;
         }
 
-        return (builderStream.cap * (block.timestamp - builderStream.last)) / frequency;
+        return (builderStream.cap * (block.timestamp - builderStream.last)) / FREQUENCY;
     }
 
     function addBuilderStream(address payable _builder, uint256 _cap, address _optionalTokenAddress) public onlyOwner {
-        streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - frequency, _optionalTokenAddress);
+        streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - FREQUENCY, _optionalTokenAddress);
         emit AddBuilder(_builder, _cap);
     }
 
@@ -104,7 +103,7 @@ contract YourContract is Ownable {
         uint256 totalAmountCanWithdraw = unlockedBuilderAmount(msg.sender);
         if(totalAmountCanWithdraw < _amount) revert NOT_ENOUGH_FUNDS_IN_STREAM();
 
-        uint256 cappedLast = block.timestamp - frequency;
+        uint256 cappedLast = block.timestamp - FREQUENCY;
         if (builderStream.last < cappedLast){
             builderStream.last = cappedLast;
         }
