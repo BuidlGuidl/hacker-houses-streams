@@ -52,6 +52,8 @@ contract YourContract is Ownable {
     error InsufficientUnlocked();
     // Send ether failed
     error SendFailed();
+    // Array length mismatch
+    error ArrayLengthMismatch();
 
     /**----------------------------------------------*
      *             State Variables                   *
@@ -88,7 +90,7 @@ contract YourContract is Ownable {
     /// @param _builder Address of the target builder
     /// @return Amount of funds unlocked at this point in time
     function unlockedBuilderAmount(address _builder) public view returns (uint128) {
-        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
+        BuilderStreamInfo storage builderStream = streamedBuilders[_builder];
         // If the builder doesn't exist yet, return 0
         if (builderStream.cap == 0) {
             return 0;
@@ -132,8 +134,8 @@ contract YourContract is Ownable {
         uint256[] calldata _caps,
         address[] calldata _optionalTokenAddresses
     ) public onlyOwner {
-        require(_builders.length == _caps.length && _builders.length == _optionalTokenAddresses.length, "Lengths are not equal");
         uint256 length = _builders.length; 
+        if (length != _caps.length || length != _optionalTokenAddresses.length) revert ArrayLengthMismatch();
 
         for (uint256 i; i < length;) {
             _addBuilderStream(payable(_builders[i]), uint128(_caps[i]), _optionalTokenAddresses[i]);
@@ -150,9 +152,8 @@ contract YourContract is Ownable {
     /// @param _builder Address of existing builder
     /// @param _cap Amount that stream should be capped at
     function updateBuilderStreamCap(address payable _builder, uint128 _cap) public onlyOwner {
-        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
-        if (builderStream.cap == 0) revert NoStream();
-        //require(builderStream.cap > 0, "No active stream for builder");
+        if (streamedBuilders[_builder].cap == 0) revert NoStream();
+
         streamedBuilders[_builder].cap = _cap;
         emit UpdateBuilder(_builder, _cap);
     }
