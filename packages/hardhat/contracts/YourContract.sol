@@ -58,6 +58,7 @@ contract YourContract is Ownable {
     /**----------------------------------------------*
      *             State Variables                   *
      *-----------------------------------------------*/
+
     // Mapping of address to `BuilderStreamInfo` structs
     mapping(address => BuilderStreamInfo) public streamedBuilders;
 
@@ -75,7 +76,7 @@ contract YourContract is Ownable {
 
         for (uint256 i; i < length;) {
             address builderAddress = _builders[i];
-            BuilderStreamInfo storage builderStream = streamedBuilders[builderAddress];
+            BuilderStreamInfo memory builderStream = streamedBuilders[builderAddress];
             result[i] = BuilderData(builderAddress, builderStream.cap, unlockedBuilderAmount(builderAddress));
 
             unchecked {
@@ -153,7 +154,6 @@ contract YourContract is Ownable {
     /// @param _cap Amount that stream should be capped at
     function updateBuilderStreamCap(address payable _builder, uint128 _cap) public onlyOwner {
         if (streamedBuilders[_builder].cap == 0) revert NoStream();
-
         streamedBuilders[_builder].cap = _cap;
         emit UpdateBuilder(_builder, _cap);
     }
@@ -169,6 +169,7 @@ contract YourContract is Ownable {
     ) internal {
         streamedBuilders[_builder] = BuilderStreamInfo(uint128(_cap), uint128(block.timestamp) - 30 days, _optionalTokenAddress);
     }
+
     /**----------------------------------------------*
      *                 Public                        *
      *-----------------------------------------------*/
