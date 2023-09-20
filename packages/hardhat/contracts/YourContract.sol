@@ -14,8 +14,8 @@ error NOT_ENOUGH_FUNDS_IN_STREAM();
 
 contract YourContract is Ownable {
     struct BuilderStreamInfo {
-        uint256 cap;
-        uint256 last;
+        uint128 cap;
+        uint128 last;
         address optionalTokenAddress;
     }
     mapping(address => BuilderStreamInfo) public streamedBuilders;
@@ -23,7 +23,7 @@ contract YourContract is Ownable {
     uint256 public constant FREQUENCY = 2592000; // 30 days
 
     event Withdraw(address indexed to, uint256 amount, string reason);
-    event AddBuilder(address indexed to, uint256 amount);
+    event AddBuilders(address[] to, uint128[] amount);
     event UpdateBuilder(address indexed to, uint256 amount);
 
     constructor() { }
@@ -50,7 +50,7 @@ contract YourContract is Ownable {
     }
 
     function unlockedBuilderAmount(address _builder) public view returns (uint256) {
-        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
+        BuilderStreamInfo storage builderStream = streamedBuilders[_builder];
         if (builderStream.cap == 0) {
             return 0;
         }
@@ -62,26 +62,26 @@ contract YourContract is Ownable {
         return (builderStream.cap * (block.timestamp - builderStream.last)) / FREQUENCY;
     }
 
-    function addBuilderStream(address payable _builder, uint256 _cap, address _optionalTokenAddress) public onlyOwner {
-        streamedBuilders[_builder] = BuilderStreamInfo(_cap, block.timestamp - FREQUENCY, _optionalTokenAddress);
-        emit AddBuilder(_builder, _cap);
+    function addBuilderStream(address payable _builder, uint128 _cap, address _optionalTokenAddress) internal {
+        streamedBuilders[_builder] = BuilderStreamInfo(_cap, uint128(block.timestamp - FREQUENCY), _optionalTokenAddress);
     }
 
-    function addBatch(address[] calldata _builders, uint256[] calldata _caps, address[] calldata _optionalTokenAddresses) public onlyOwner {
+    function addBatch(address[] calldata _builders, uint128[] calldata _caps, address[] calldata _optionalTokenAddresses) public onlyOwner {
         // cache length
         uint256 _length = _builders.length;
-        if (_length != _caps.length) revert INVALID_ARRAY_INPUT();
+        if (_length != _caps.length || _caps.length != _optionalTokenAddresses.length) revert INVALID_ARRAY_INPUT();
+        
         for (uint256 i = 0; i < _length;) {
             addBuilderStream(payable(_builders[i]), _caps[i],_optionalTokenAddresses[i]);
             unchecked {
                 ++ i;
             }
         }
+        emit AddBuilders(_builders, _caps);
     }
 
-    function updateBuilderStreamCap(address payable _builder, uint256 _cap) public onlyOwner {
-        BuilderStreamInfo memory builderStream = streamedBuilders[_builder];
-        if (builderStream.cap == 0) revert NO_ACTIVE_STREAM();
+    function updateBuilderStreamCap(address payable _builder, uint128 _cap) public onlyOwner {
+        if (streamedBuilders[_builder].cap == 0) revert NO_ACTIVE_STREAM();
         
         streamedBuilders[_builder].cap = _cap;
         emit UpdateBuilder(_builder, _cap);
@@ -103,12 +103,12 @@ contract YourContract is Ownable {
         uint256 totalAmountCanWithdraw = unlockedBuilderAmount(msg.sender);
         if(totalAmountCanWithdraw < _amount) revert NOT_ENOUGH_FUNDS_IN_STREAM();
 
-        uint256 cappedLast = block.timestamp - FREQUENCY;
+        uint128 cappedLast = uint128(block.timestamp - FREQUENCY);
         if (builderStream.last < cappedLast){
             builderStream.last = cappedLast;
         }
 
-        builderStream.last = builderStream.last + ((block.timestamp - builderStream.last) * _amount / totalAmountCanWithdraw);
+        builderStream.last = uint128(builderStream.last + ((block.timestamp - builderStream.last) * _amount / totalAmountCanWithdraw));
 
         if(builderStream.optionalTokenAddress == address(0)){
 
