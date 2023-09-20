@@ -62,7 +62,7 @@ contract YourContract is Ownable {
         return (builderStream.cap * (block.timestamp - builderStream.last)) / FREQUENCY;
     }
 
-    function addBuilderStream(address payable _builder, uint128 _cap, address _optionalTokenAddress) public onlyOwner {
+    function addBuilderStream(address payable _builder, uint128 _cap, address _optionalTokenAddress) internal {
         streamedBuilders[_builder] = BuilderStreamInfo(_cap, uint128(block.timestamp - FREQUENCY), _optionalTokenAddress);
     }
 
