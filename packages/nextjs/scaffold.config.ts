@@ -9,6 +9,7 @@ export type ScaffoldConfig = {
     onlyLocal: boolean;
   };
   walletAutoConnect: boolean;
+  walletConnectProjectId: string;
 };
 
 const scaffoldConfig = {
@@ -39,6 +40,11 @@ const scaffoldConfig = {
    * 2. If user is not connected to any wallet:  On reload, connect to burner wallet if burnerWallet.enabled is true && burnerWallet.onlyLocal is false
    */
   walletAutoConnect: true,
+  // This is ours WalletConnect's default project ID.
+  // You can get your own at https://cloud.walletconnect.com
+  // It's recommended to store it in an env variable:
+  // .env.local for local testing, and in the Vercel/system env config for live apps.
+  walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "3a8170812b534d0ff9d794f19a901d64",
 } satisfies ScaffoldConfig;
 
 export default scaffoldConfig;
