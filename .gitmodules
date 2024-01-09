@@ -1,0 +1,9 @@
+[submodule "packages/foundry/lib/forge-std"]
+	path = packages/foundry/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "packages/foundry/lib/solmate"]
+	path = packages/foundry/lib/solmate
+	url = https://github.com/transmissions11/solmate
+[submodule "packages/foundry/lib/solady"]
+	path = packages/foundry/lib/solady
+	url = https://github.com/vectorized/solady
